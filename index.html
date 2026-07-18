@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Yujin의 AWS, Linux, 모니터링, 장애 대응, IaC, 서버리스 및 보안 자동화 클라우드 운영 포트폴리오입니다.">
+  <title>Yujin | Cloud Operations Portfolio</title>
+  <style>
+:root {
+  --bg: #ffffff;
+  --soft: #f7f8fa;
+  --text: #171717;
+  --muted: #616161;
+  --line: #dddddd;
+  --blue: #2563eb;
+  --blue-soft: #eff6ff;
+  --container: 1080px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body {
+  margin: 0;
+  color: var(--text);
+  background: var(--bg);
+  font-family: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  word-break: keep-all;
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+.container { width: min(calc(100% - 40px), var(--container)); margin: 0 auto; }
+.section { padding: 72px 0; }
+.muted-section { background: var(--soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.skip-link { position: fixed; top: -60px; left: 12px; z-index: 999; padding: 8px 12px; background: var(--blue); color: #fff; }
+.skip-link:focus { top: 12px; }
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255,255,255,.96);
+  border-bottom: 1px solid var(--line);
+}
+.header-inner { min-height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.logo { display: flex; align-items: center; gap: 9px; font-weight: 700; }
+.logo-mark { color: var(--blue); font-size: .84rem; font-weight: 800; }
+.logo-text { font-size: .95rem; }
+.main-nav { display: flex; gap: 24px; font-size: .92rem; font-weight: 600; }
+.main-nav a { padding: 21px 0 18px; color: var(--muted); border-bottom: 2px solid transparent; }
+.main-nav a:hover, .main-nav a:focus-visible, .main-nav a.active { color: var(--text); border-bottom-color: var(--blue); }
+
+.eyebrow, .panel-label, .showcase-label, .directory-kicker {
+  margin: 0 0 10px;
+  color: var(--blue);
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .03em;
+  text-transform: none;
+}
+.section-heading { max-width: 760px; margin-bottom: 32px; }
+.section-heading h2, .project-group-heading h2 { margin: 0; font-size: clamp(1.75rem, 3.5vw, 2.4rem); line-height: 1.35; letter-spacing: -.03em; }
+.section-heading > p:last-child { margin: 12px 0 0; color: var(--muted); }
+
+.hero { padding: 90px 0 76px; border-bottom: 1px solid var(--line); }
+.hero-grid, .projects-hero-grid { display: grid; grid-template-columns: minmax(0,1.3fr) minmax(280px,.7fr); gap: 56px; align-items: start; }
+.hero h1, .page-hero h1, .projects-hero h1, .detail-hero h1 {
+  margin: 0;
+  font-size: clamp(2.5rem, 5.4vw, 4.5rem);
+  line-height: 1.16;
+  letter-spacing: -.055em;
+}
+.hero-description, .projects-hero-description, .detail-lead, .page-hero > .container > p:last-child {
+  max-width: 760px;
+  margin: 22px 0 0;
+  color: var(--muted);
+  font-size: 1.03rem;
+}
+.hero-actions, .detail-actions, .showcase-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.button {
+  display: inline-flex;
+  min-height: 43px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 17px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: #fff;
+  font-size: .88rem;
+  font-weight: 700;
+}
+.button:hover, .button:focus-visible { border-color: var(--blue); color: var(--blue); }
+.button.primary { color: #fff; background: var(--blue); border-color: var(--blue); }
+.button.primary:hover, .button.primary:focus-visible { color: #fff; background: #1d4ed8; }
+.button.secondary, .light-button { background: #fff !important; color: var(--text) !important; }
+
+.hero-panel, .project-summary-panel {
+  padding: 0 0 0 26px;
+  border-left: 2px solid var(--blue);
+}
+.hero-panel h2 { margin: 0 0 16px; font-size: 1.35rem; }
+.profile-list { margin: 0; }
+.profile-list div { padding: 13px 0; border-top: 1px solid var(--line); }
+.profile-list dt { margin-bottom: 3px; font-size: .82rem; font-weight: 700; }
+.profile-list dd { margin: 0; color: var(--muted); font-size: .9rem; }
+
+.intro-card { max-width: 900px; padding: 0; }
+.intro-card p { margin: 0; color: var(--muted); }
+.intro-card p + p { margin-top: 14px; }
+.profile-table-block { margin-top: 42px; }
+.table-title-row { margin-bottom: 12px; }
+.table-title-row h3 { margin: 0; font-size: 1.25rem; }
+.table-wrap { overflow-x: auto; border-top: 2px solid var(--text); border-bottom: 1px solid var(--line); }
+.portfolio-table { width: 100%; min-width: 680px; border-collapse: collapse; text-align: left; }
+.portfolio-table th, .portfolio-table td { padding: 15px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.portfolio-table th { background: transparent; font-size: .84rem; font-weight: 700; white-space: nowrap; }
+.portfolio-table td { color: var(--muted); font-size: .91rem; }
+.portfolio-table td:first-child { color: var(--text); font-weight: 600; }
+.portfolio-table tbody tr:last-child td { border-bottom: 0; }
+.education-table th:first-child, .education-table td:first-child { width: 22%; white-space: nowrap; }
+.detail-education-table th:first-child, .detail-education-table td:first-child { width: 36%; }
+
+.skill-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); border-top: 1px solid var(--line); }
+.skill-card { padding: 24px 0; border-bottom: 1px solid var(--line); }
+.skill-card:nth-child(odd) { padding-right: 28px; }
+.skill-card:nth-child(even) { padding-left: 28px; border-left: 1px solid var(--line); }
+.skill-card:last-child:nth-child(odd) { grid-column: 1 / -1; padding-right: 0; }
+.skill-card h3 { margin: 0 0 13px; font-size: 1.02rem; }
+.skill-tags, .showcase-tags, .tags, .about-keywords { display: flex; flex-wrap: wrap; gap: 7px; }
+.skill-tags span, .showcase-tags span, .tags span, .about-keywords span, .index-tags span {
+  padding: 5px 8px;
+  color: #334155;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-size: .73rem;
+  font-weight: 600;
+}
+
+.contact-box { display: flex; align-items: end; justify-content: space-between; gap: 40px; padding: 0; }
+.contact-box h2 { max-width: 760px; margin: 0; font-size: clamp(1.6rem,3vw,2.25rem); line-height: 1.4; }
+.contact-box p:last-child { margin: 10px 0 0; color: var(--muted); }
+.contact-links { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-top: 18px; }
+.contact-links a { color: var(--blue); font-size: .92rem; font-weight: 600; }
+
+.page-hero, .projects-hero, .detail-hero { padding: 82px 0 64px; border-bottom: 1px solid var(--line); }
+.project-summary-panel > div { display: flex; align-items: baseline; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid var(--line); }
+.project-summary-panel strong { color: var(--blue); font-size: 1.6rem; }
+.project-summary-panel span { font-size: .85rem; font-weight: 600; }
+.project-summary-panel p { margin: 15px 0 0; color: var(--muted); font-size: .86rem; }
+
+.project-index-section { background: #fff; }
+.project-directory { border-top: 2px solid var(--text); }
+.directory-group { padding: 26px 0 34px; border-bottom: 1px solid var(--line); }
+.directory-group-heading { display: flex; justify-content: space-between; gap: 24px; align-items: end; margin-bottom: 12px; }
+.directory-group-heading h3 { margin: 0; font-size: 1.18rem; }
+.directory-count { color: var(--muted); font-size: .78rem; }
+.directory-list { border-top: 1px solid var(--line); }
+.directory-item {
+  display: grid;
+  grid-template-columns: 48px minmax(0,1fr) minmax(190px,.7fr) 24px;
+  gap: 18px;
+  align-items: center;
+  min-height: 82px;
+  padding: 13px 8px;
+  border-top: 1px solid var(--line);
+}
+.directory-list .directory-item:first-child { border-top: 0; }
+.directory-item:hover, .directory-item:focus-visible { background: var(--blue-soft); }
+.directory-item-featured { background: #fafcff; }
+.directory-number { color: var(--blue); font-size: .86rem; font-weight: 700; }
+.directory-main { display: flex; flex-direction: column; }
+.directory-main strong { font-size: 1rem; }
+.directory-main small { margin-top: 3px; color: var(--muted); font-size: .84rem; }
+.directory-tech { color: var(--muted); font-size: .78rem; text-align: right; }
+.directory-arrow { color: var(--blue); }
+
+.project-detail-list { background: #fff; }
+.project-showcase { scroll-margin-top: 88px; padding: 46px 0; border-top: 1px solid var(--line); }
+.project-showcase:first-of-type { border-top: 2px solid var(--text); }
+.project-showcase + .project-showcase { margin-top: 0; }
+.team-showcase, .highlighted-showcase { border-color: var(--line); }
+.showcase-header { display: grid; grid-template-columns: 55px minmax(0,1fr); gap: 18px; }
+.showcase-number { color: var(--blue); font-size: 1.2rem; font-weight: 700; }
+.showcase-meta { display: flex; flex-wrap: wrap; gap: 7px 16px; color: var(--muted); font-size: .74rem; font-weight: 600; }
+.showcase-title-wrap h3 { margin: 8px 0 0; font-size: clamp(1.55rem,3vw,2.15rem); line-height: 1.35; letter-spacing: -.03em; }
+.showcase-title-wrap > p { max-width: 900px; margin: 12px 0 0; color: var(--muted); }
+.showcase-tags { margin: 20px 0 24px 73px; }
+.showcase-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(340px,.9fr); gap: 34px; align-items: start; }
+.showcase-image { margin: 0; padding: 14px; background: var(--soft); border: 1px solid var(--line); }
+.showcase-image img { width: 100%; max-height: 480px; object-fit: contain; }
+.showcase-image figcaption { margin-top: 10px; color: var(--muted); font-size: .76rem; text-align: center; }
+.showcase-content { display: flex; flex-direction: column; }
+.showcase-block, .showcase-result { padding: 0 0 20px; }
+.showcase-block + .showcase-block, .showcase-result + .showcase-block, .showcase-block + .showcase-result { padding-top: 20px; border-top: 1px solid var(--line); }
+.showcase-block ul { margin: 0; padding-left: 18px; }
+.showcase-block li, .showcase-block p:not(.showcase-label), .showcase-result p:not(.showcase-label) { color: var(--muted); font-size: .91rem; }
+.showcase-block li + li { margin-top: 6px; }
+.showcase-result { padding: 17px 18px; background: var(--blue-soft); border-left: 3px solid var(--blue); }
+.showcase-result strong { display: block; margin-bottom: 6px; }
+.showcase-actions { margin-top: 22px; }
+.showcase-actions .button { min-height: 40px; font-size: .8rem; }
+
+.breadcrumb { margin-bottom: 20px; color: var(--muted); font-size: .84rem; }
+.breadcrumb a { color: var(--blue); font-weight: 600; }
+.detail-layout { display: grid; grid-template-columns: minmax(0,1fr) 230px; gap: 56px; align-items: start; }
+.detail-content section { padding: 34px 0; border-bottom: 1px solid var(--line); }
+.detail-content section:first-child { padding-top: 0; }
+.detail-content h2 { margin: 0 0 14px; font-size: 1.55rem; letter-spacing: -.025em; }
+.detail-content h3 { margin: 22px 0 8px; }
+.detail-content p, .detail-content li { color: var(--muted); }
+.detail-content ul, .detail-content ol { padding-left: 20px; }
+.detail-image { margin: 10px 0 0; padding: 12px; border: 1px solid var(--line); background: var(--soft); }
+.detail-sidebar { position: sticky; top: 88px; padding-left: 18px; border-left: 1px solid var(--line); }
+.detail-sidebar strong { display: block; margin-bottom: 10px; }
+.detail-sidebar a { display: block; padding: 6px 0; color: var(--muted); font-size: .83rem; }
+.detail-sidebar a:hover { color: var(--blue); }
+.note-box { padding: 16px 18px; background: var(--blue-soft); border-left: 3px solid var(--blue); }
+.note-box p { margin: 0; }
+
+.about-grid, .background-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 32px; }
+.about-copy { color: var(--muted); }
+.background-card { padding: 0; }
+.background-card h3 { margin: 8px 0; }
+.credential-list { margin: 12px 0 0; padding: 0; list-style: none; }
+.credential-list li { display: flex; justify-content: space-between; gap: 18px; padding: 9px 0; border-top: 1px solid var(--line); }
+.credential-list span { color: var(--muted); font-size: .82rem; }
+
+.site-footer { padding: 24px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .82rem; }
+.footer-inner { display: flex; justify-content: space-between; gap: 20px; }
+.footer-inner p { margin: 0; }
+.footer-inner a { color: var(--blue); }
+.text-link { color: var(--blue); font-weight: 600; }
+.project-list, .focus-grid, .journey-list { display: grid; gap: 18px; }
+
+@media (max-width: 900px) {
+  .hero-grid, .projects-hero-grid, .showcase-grid, .detail-layout, .about-grid, .background-grid { grid-template-columns: 1fr; }
+  .hero-panel, .project-summary-panel { padding: 22px 0 0; border-left: 0; border-top: 2px solid var(--blue); }
+  .detail-sidebar { position: static; order: -1; padding: 0 0 14px; border-left: 0; border-bottom: 1px solid var(--line); }
+  .directory-item { grid-template-columns: 42px minmax(0,1fr) 24px; }
+  .directory-tech { display: none; }
+}
+
+@media (max-width: 700px) {
+  .container { width: min(calc(100% - 28px), var(--container)); }
+  .section { padding: 56px 0; }
+  .header-inner { min-height: 58px; }
+  .logo-text { display: none; }
+  .main-nav { gap: 16px; font-size: .84rem; }
+  .main-nav a { padding: 18px 0 15px; }
+  .hero, .page-hero, .projects-hero, .detail-hero { padding: 64px 0 50px; }
+  .hero h1, .page-hero h1, .projects-hero h1, .detail-hero h1 { font-size: clamp(2.2rem,11vw,3.25rem); }
+  .skill-grid { grid-template-columns: 1fr; }
+  .skill-card:nth-child(odd), .skill-card:nth-child(even) { padding: 20px 0; border-left: 0; }
+  .skill-card:last-child:nth-child(odd) { grid-column: auto; }
+  .contact-box, .footer-inner { align-items: flex-start; flex-direction: column; }
+  .contact-box .button { width: 100%; }
+  .portfolio-table th, .portfolio-table td { padding: 13px 12px; }
+  .showcase-header { grid-template-columns: 1fr; gap: 4px; }
+  .showcase-tags { margin-left: 0; }
+  .project-showcase { padding: 38px 0; }
+  .directory-item { min-height: 76px; padding: 12px 4px; }
+  .directory-main small { white-space: normal; }
+}
+
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">본문으로 바로가기</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html" aria-label="Yujin 홈으로 이동">
+        <span class="logo-mark">YJ</span>
+        <span class="logo-text">Yujin Portfolio</span>
+      </a>
+      <nav class="main-nav" aria-label="주요 메뉴">
+        <a class="active" href="index.html" aria-current="page">Yujin</a>
+        <a href="projects.html">Projects</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero section">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Cloud Operations</p>
+          <h1>최유진<br>Cloud Operations</h1>
+          <p class="hero-description">
+            AWS/Linux 기반 클라우드 운영 직무를 준비하고 있습니다. 모니터링, 로그 추적, 장애 대응, IaC와 보안 자동화 실습을 정리했습니다.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="projects.html">프로젝트 보기</a>
+            <a class="button secondary" href="https://github.com/Yujajja" target="_blank" rel="noopener noreferrer">GitHub 프로필</a>
+          </div>
+        </div>
+
+        <aside class="hero-panel" aria-label="지원 직무와 핵심 역량">
+          <p class="panel-label">Profile</p>
+          <h2>Choi Yujin</h2>
+          <dl class="profile-list">
+            <div>
+              <dt>Target Role</dt>
+              <dd>시스템·서버 관제, 클라우드 운영, 인프라 운영, 장애 대응</dd>
+            </div>
+            <div>
+              <dt>Operations Focus</dt>
+              <dd>모니터링, 로그 분석, 장애 1차 대응, 자동화, IaC, 보안 운영</dd>
+            </div>
+            <div>
+              <dt>Work Style</dt>
+              <dd>정상 동작 확인에서 끝내지 않고 장애를 재현해 원인과 대응 절차를 기록합니다.</dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+    <section id="profile" class="profile-section section muted-section" aria-labelledby="profile-title">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">About Yujin</p>
+          <h2 id="profile-title">운영 환경을 직접 구성하고, 장애를 추적하며 성장하고 있습니다.</h2>
+        </div>
+
+        <div class="intro-card">
+          <p>
+            클라우드 인프라를 직접 구성하고, 서비스가 실행되는 것만 확인하는 데서 끝내지 않습니다.
+            로그와 지표를 통해 상태를 확인하고 장애를 재현한 뒤, 감지·확인·복구 과정을 정리합니다.
+          </p>
+          <p>
+            팀 프로젝트에서는 Prometheus와 Grafana 기반 모니터링, AlertManager 알림,
+            Locust와 Chaos Mesh를 활용한 부하·장애 검증을 담당했습니다. 이후 개인 실습을 통해
+            EC2 운영, ELK 로그 추적, Terraform, 서버리스 CI/CD, 보안 자동 조치까지 운영 범위를 확장했습니다.
+          </p>
+        </div>
+
+        <div class="profile-table-block">
+          <div class="table-title-row">
+            <div>
+              <p class="panel-label">Certifications</p>
+              <h3>자격증</h3>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="portfolio-table">
+              <thead>
+                <tr>
+                  <th scope="col">자격명</th>
+                  <th scope="col">발행처</th>
+                  <th scope="col">취득년월</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>AWS SAA-C03</td>
+                  <td>AWS Certified Solutions Architect</td>
+                  <td>2026.07</td>
+                </tr>
+                <tr>
+                  <td>RHCSA</td>
+                  <td>Red Hat</td>
+                  <td>2026.01</td>
+                </tr>
+                <tr>
+                  <td>네트워크관리사 2급</td>
+                  <td>한국정보통신자격협회</td>
+                  <td>2026.02</td>
+                </tr>
+                <tr>
+                  <td>NCA</td>
+                  <td>Naver Cloud Platform</td>
+                  <td>2026.02</td>
+                </tr>
+                <tr>
+                  <td>GTQ 그래픽기술자격 1급</td>
+                  <td>한국생산성본부</td>
+                  <td>2023.08</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="profile-table-block">
+          <div class="table-title-row">
+            <div>
+              <p class="panel-label">Education</p>
+              <h3>교육내역</h3>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="portfolio-table education-table">
+              <thead>
+                <tr>
+                  <th scope="col">기간</th>
+                  <th scope="col">교육기관</th>
+                  <th scope="col">과정명</th>
+                  <th scope="col">시수</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2025.12.23 ~ 2026.05.14</td>
+                  <td>청년취업사관학교 도봉캠퍼스</td>
+                  <td>AI 바이브코딩을 활용한 클라우드 DevOps 엔지니어 양성과정</td>
+                  <td>720h</td>
+                </tr>
+                <tr>
+                  <td>2023.06.12 ~ 2023.12.11</td>
+                  <td>노원 이젠아카데미</td>
+                  <td>모바일 웹&amp;앱디자인 및 프론트엔드</td>
+                  <td>740h</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="profile-table-block">
+          <div class="table-title-row">
+            <div>
+              <p class="panel-label">Education Details</p>
+              <h3>교육내역 상세</h3>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="portfolio-table detail-education-table">
+              <thead>
+                <tr>
+                  <th scope="col">과정명</th>
+                  <th scope="col">교육 내용</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>AI 바이브코딩을 활용한 클라우드 DevOps 엔지니어 양성과정</td>
+                  <td>AI 바이브코딩을 활용한 Linux·AWS·Kubernetes·CI/CD·IaC 기반 클라우드 DevOps 엔지니어 양성과정 이수</td>
+                </tr>
+                <tr>
+                  <td>모바일 웹&amp;앱디자인 및 프론트엔드</td>
+                  <td>UI/UX 디자인 및 반응형 HTML·CSS·JavaScript 기반 모바일 웹·앱 프론트엔드 개발 실무 과정 이수</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="skills section" aria-labelledby="skills-title">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Technology</p>
+          <h2 id="skills-title">기술 스택</h2>
+          <p>교육, 팀 프로젝트와 AWS/Linux 운영 실습에서 활용한 기술을 분야별로 정리했습니다.</p>
+        </div>
+
+        <div class="skill-grid">
+          <article class="skill-card">
+            <h3>Cloud &amp; Network</h3>
+            <div class="skill-tags">
+              <span>AWS EC2</span><span>VPC</span><span>IAM</span><span>ALB</span><span>Target Group</span>
+              <span>Auto Scaling</span><span>Launch Template</span><span>NAT Gateway</span><span>Bastion Host</span>
+              <span>S3</span><span>RDS</span><span>Route 53</span><span>CloudFront</span><span>EKS</span>
+            </div>
+          </article>
+
+          <article class="skill-card">
+            <h3>Serverless &amp; Security</h3>
+            <div class="skill-tags">
+              <span>API Gateway</span><span>Lambda</span><span>DynamoDB</span><span>SQS</span>
+              <span>CloudWatch Logs</span><span>CloudWatch Alarm</span><span>SNS</span><span>CloudTrail</span>
+              <span>EventBridge</span><span>AWS Config</span><span>Security Group</span>
+            </div>
+          </article>
+
+          <article class="skill-card">
+            <h3>OS &amp; Automation</h3>
+            <div class="skill-tags">
+              <span>Linux</span><span>Amazon Linux 2023</span><span>Nginx</span><span>Shell Script</span>
+              <span>Ansible</span><span>Terraform</span>
+            </div>
+          </article>
+
+          <article class="skill-card">
+            <h3>Container &amp; Orchestration</h3>
+            <div class="skill-tags">
+              <span>Docker</span><span>Docker Compose</span><span>Kubernetes</span><span>HPA</span>
+              <span>Helm</span><span>Argo CD</span>
+            </div>
+          </article>
+
+          <article class="skill-card">
+            <h3>Monitoring &amp; Logging</h3>
+            <div class="skill-tags">
+              <span>Prometheus</span><span>Grafana</span><span>AlertManager</span><span>Slack Alert</span>
+              <span>Logback</span><span>MDC</span><span>Logstash</span><span>Elasticsearch</span>
+              <span>Kibana</span><span>OpenSearch</span>
+            </div>
+          </article>
+
+          <article class="skill-card">
+            <h3>CI/CD &amp; Development</h3>
+            <div class="skill-tags">
+              <span>GitHub Actions</span><span>OIDC</span><span>Java 17</span><span>Spring Boot</span>
+              <span>Python 3.12</span><span>JavaScript</span><span>HTML</span><span>CSS</span><span>Redis</span>
+            </div>
+          </article>
+
+          <article class="skill-card">
+            <h3>Test &amp; Collaboration Tools</h3>
+            <div class="skill-tags">
+              <span>Locust</span><span>Chaos Mesh</span><span>Postman</span><span>Git</span><span>GitHub</span>
+              <span>Notion</span><span>Slack</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact section" aria-labelledby="contact-title">
+      <div class="container contact-box">
+        <div>
+          <p class="eyebrow">Contact</p>
+          <h2 id="contact-title">운영 과정을 기록하고 개선하는 주니어 클라우드 엔지니어를 준비하고 있습니다.</h2>
+          <p>프로젝트 상세 내용은 Projects 페이지에서 확인할 수 있습니다.</p>
+          <div class="contact-links">
+            <a href="mailto:chdbwls2023@gmail.com">chdbwls2023@gmail.com</a>
+            <a href="tel:01066935706">010-6693-5706</a>
+          </div>
+        </div>
+        <a class="button primary light-button" href="projects.html">Projects 보기</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2026 Yujin. Cloud Operations Portfolio.</p>
+      <a href="#main-content">맨 위로 ↑</a>
+    </div>
+  </footer>
+</body>
+</html>

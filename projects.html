@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Yujin의 팀 프로젝트와 AWS/Linux 클라우드 운영 개인 실습 프로젝트를 소개합니다.">
+  <title>Projects | Yujin Cloud Operations Portfolio</title>
+  <style>
+:root {
+  --bg: #ffffff;
+  --soft: #f7f8fa;
+  --text: #171717;
+  --muted: #616161;
+  --line: #dddddd;
+  --blue: #2563eb;
+  --blue-soft: #eff6ff;
+  --container: 1080px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body {
+  margin: 0;
+  color: var(--text);
+  background: var(--bg);
+  font-family: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  word-break: keep-all;
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+.container { width: min(calc(100% - 40px), var(--container)); margin: 0 auto; }
+.section { padding: 72px 0; }
+.muted-section { background: var(--soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.skip-link { position: fixed; top: -60px; left: 12px; z-index: 999; padding: 8px 12px; background: var(--blue); color: #fff; }
+.skip-link:focus { top: 12px; }
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255,255,255,.96);
+  border-bottom: 1px solid var(--line);
+}
+.header-inner { min-height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.logo { display: flex; align-items: center; gap: 9px; font-weight: 700; }
+.logo-mark { color: var(--blue); font-size: .84rem; font-weight: 800; }
+.logo-text { font-size: .95rem; }
+.main-nav { display: flex; gap: 24px; font-size: .92rem; font-weight: 600; }
+.main-nav a { padding: 21px 0 18px; color: var(--muted); border-bottom: 2px solid transparent; }
+.main-nav a:hover, .main-nav a:focus-visible, .main-nav a.active { color: var(--text); border-bottom-color: var(--blue); }
+
+.eyebrow, .panel-label, .showcase-label, .directory-kicker {
+  margin: 0 0 10px;
+  color: var(--blue);
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .03em;
+  text-transform: none;
+}
+.section-heading { max-width: 760px; margin-bottom: 32px; }
+.section-heading h2, .project-group-heading h2 { margin: 0; font-size: clamp(1.75rem, 3.5vw, 2.4rem); line-height: 1.35; letter-spacing: -.03em; }
+.section-heading > p:last-child { margin: 12px 0 0; color: var(--muted); }
+
+.hero { padding: 90px 0 76px; border-bottom: 1px solid var(--line); }
+.hero-grid, .projects-hero-grid { display: grid; grid-template-columns: minmax(0,1.3fr) minmax(280px,.7fr); gap: 56px; align-items: start; }
+.hero h1, .page-hero h1, .projects-hero h1, .detail-hero h1 {
+  margin: 0;
+  font-size: clamp(2.5rem, 5.4vw, 4.5rem);
+  line-height: 1.16;
+  letter-spacing: -.055em;
+}
+.hero-description, .projects-hero-description, .detail-lead, .page-hero > .container > p:last-child {
+  max-width: 760px;
+  margin: 22px 0 0;
+  color: var(--muted);
+  font-size: 1.03rem;
+}
+.hero-actions, .detail-actions, .showcase-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.button {
+  display: inline-flex;
+  min-height: 43px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 17px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: #fff;
+  font-size: .88rem;
+  font-weight: 700;
+}
+.button:hover, .button:focus-visible { border-color: var(--blue); color: var(--blue); }
+.button.primary { color: #fff; background: var(--blue); border-color: var(--blue); }
+.button.primary:hover, .button.primary:focus-visible { color: #fff; background: #1d4ed8; }
+.button.secondary, .light-button { background: #fff !important; color: var(--text) !important; }
+
+.hero-panel, .project-summary-panel {
+  padding: 0 0 0 26px;
+  border-left: 2px solid var(--blue);
+}
+.hero-panel h2 { margin: 0 0 16px; font-size: 1.35rem; }
+.profile-list { margin: 0; }
+.profile-list div { padding: 13px 0; border-top: 1px solid var(--line); }
+.profile-list dt { margin-bottom: 3px; font-size: .82rem; font-weight: 700; }
+.profile-list dd { margin: 0; color: var(--muted); font-size: .9rem; }
+
+.intro-card { max-width: 900px; padding: 0; }
+.intro-card p { margin: 0; color: var(--muted); }
+.intro-card p + p { margin-top: 14px; }
+.profile-table-block { margin-top: 42px; }
+.table-title-row { margin-bottom: 12px; }
+.table-title-row h3 { margin: 0; font-size: 1.25rem; }
+.table-wrap { overflow-x: auto; border-top: 2px solid var(--text); border-bottom: 1px solid var(--line); }
+.portfolio-table { width: 100%; min-width: 680px; border-collapse: collapse; text-align: left; }
+.portfolio-table th, .portfolio-table td { padding: 15px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.portfolio-table th { background: transparent; font-size: .84rem; font-weight: 700; white-space: nowrap; }
+.portfolio-table td { color: var(--muted); font-size: .91rem; }
+.portfolio-table td:first-child { color: var(--text); font-weight: 600; }
+.portfolio-table tbody tr:last-child td { border-bottom: 0; }
+.education-table th:first-child, .education-table td:first-child { width: 22%; white-space: nowrap; }
+.detail-education-table th:first-child, .detail-education-table td:first-child { width: 36%; }
+
+.skill-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); border-top: 1px solid var(--line); }
+.skill-card { padding: 24px 0; border-bottom: 1px solid var(--line); }
+.skill-card:nth-child(odd) { padding-right: 28px; }
+.skill-card:nth-child(even) { padding-left: 28px; border-left: 1px solid var(--line); }
+.skill-card:last-child:nth-child(odd) { grid-column: 1 / -1; padding-right: 0; }
+.skill-card h3 { margin: 0 0 13px; font-size: 1.02rem; }
+.skill-tags, .showcase-tags, .tags, .about-keywords { display: flex; flex-wrap: wrap; gap: 7px; }
+.skill-tags span, .showcase-tags span, .tags span, .about-keywords span, .index-tags span {
+  padding: 5px 8px;
+  color: #334155;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-size: .73rem;
+  font-weight: 600;
+}
+
+.contact-box { display: flex; align-items: end; justify-content: space-between; gap: 40px; padding: 0; }
+.contact-box h2 { max-width: 760px; margin: 0; font-size: clamp(1.6rem,3vw,2.25rem); line-height: 1.4; }
+.contact-box p:last-child { margin: 10px 0 0; color: var(--muted); }
+.contact-links { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-top: 18px; }
+.contact-links a { color: var(--blue); font-size: .92rem; font-weight: 600; }
+
+.page-hero, .projects-hero, .detail-hero { padding: 82px 0 64px; border-bottom: 1px solid var(--line); }
+.project-summary-panel > div { display: flex; align-items: baseline; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid var(--line); }
+.project-summary-panel strong { color: var(--blue); font-size: 1.6rem; }
+.project-summary-panel span { font-size: .85rem; font-weight: 600; }
+.project-summary-panel p { margin: 15px 0 0; color: var(--muted); font-size: .86rem; }
+
+.project-index-section { background: #fff; }
+.project-directory { border-top: 2px solid var(--text); }
+.directory-group { padding: 26px 0 34px; border-bottom: 1px solid var(--line); }
+.directory-group-heading { display: flex; justify-content: space-between; gap: 24px; align-items: end; margin-bottom: 12px; }
+.directory-group-heading h3 { margin: 0; font-size: 1.18rem; }
+.directory-count { color: var(--muted); font-size: .78rem; }
+.directory-list { border-top: 1px solid var(--line); }
+.directory-item {
+  display: grid;
+  grid-template-columns: 48px minmax(0,1fr) minmax(190px,.7fr) 24px;
+  gap: 18px;
+  align-items: center;
+  min-height: 82px;
+  padding: 13px 8px;
+  border-top: 1px solid var(--line);
+}
+.directory-list .directory-item:first-child { border-top: 0; }
+.directory-item:hover, .directory-item:focus-visible { background: var(--blue-soft); }
+.directory-item-featured { background: #fafcff; }
+.directory-number { color: var(--blue); font-size: .86rem; font-weight: 700; }
+.directory-main { display: flex; flex-direction: column; }
+.directory-main strong { font-size: 1rem; }
+.directory-main small { margin-top: 3px; color: var(--muted); font-size: .84rem; }
+.directory-tech { color: var(--muted); font-size: .78rem; text-align: right; }
+.directory-arrow { color: var(--blue); }
+
+.project-detail-list { background: #fff; }
+.project-showcase { scroll-margin-top: 88px; padding: 46px 0; border-top: 1px solid var(--line); }
+.project-showcase:first-of-type { border-top: 2px solid var(--text); }
+.project-showcase + .project-showcase { margin-top: 0; }
+.team-showcase, .highlighted-showcase { border-color: var(--line); }
+.showcase-header { display: grid; grid-template-columns: 55px minmax(0,1fr); gap: 18px; }
+.showcase-number { color: var(--blue); font-size: 1.2rem; font-weight: 700; }
+.showcase-meta { display: flex; flex-wrap: wrap; gap: 7px 16px; color: var(--muted); font-size: .74rem; font-weight: 600; }
+.showcase-title-wrap h3 { margin: 8px 0 0; font-size: clamp(1.55rem,3vw,2.15rem); line-height: 1.35; letter-spacing: -.03em; }
+.showcase-title-wrap > p { max-width: 900px; margin: 12px 0 0; color: var(--muted); }
+.showcase-tags { margin: 20px 0 24px 73px; }
+.showcase-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(340px,.9fr); gap: 34px; align-items: start; }
+.showcase-image { margin: 0; padding: 14px; background: var(--soft); border: 1px solid var(--line); }
+.showcase-image img { width: 100%; max-height: 480px; object-fit: contain; }
+.showcase-image figcaption { margin-top: 10px; color: var(--muted); font-size: .76rem; text-align: center; }
+.showcase-content { display: flex; flex-direction: column; }
+.showcase-block, .showcase-result { padding: 0 0 20px; }
+.showcase-block + .showcase-block, .showcase-result + .showcase-block, .showcase-block + .showcase-result { padding-top: 20px; border-top: 1px solid var(--line); }
+.showcase-block ul { margin: 0; padding-left: 18px; }
+.showcase-block li, .showcase-block p:not(.showcase-label), .showcase-result p:not(.showcase-label) { color: var(--muted); font-size: .91rem; }
+.showcase-block li + li { margin-top: 6px; }
+.showcase-result { padding: 17px 18px; background: var(--blue-soft); border-left: 3px solid var(--blue); }
+.showcase-result strong { display: block; margin-bottom: 6px; }
+.showcase-actions { margin-top: 22px; }
+.showcase-actions .button { min-height: 40px; font-size: .8rem; }
+
+.breadcrumb { margin-bottom: 20px; color: var(--muted); font-size: .84rem; }
+.breadcrumb a { color: var(--blue); font-weight: 600; }
+.detail-layout { display: grid; grid-template-columns: minmax(0,1fr) 230px; gap: 56px; align-items: start; }
+.detail-content section { padding: 34px 0; border-bottom: 1px solid var(--line); }
+.detail-content section:first-child { padding-top: 0; }
+.detail-content h2 { margin: 0 0 14px; font-size: 1.55rem; letter-spacing: -.025em; }
+.detail-content h3 { margin: 22px 0 8px; }
+.detail-content p, .detail-content li { color: var(--muted); }
+.detail-content ul, .detail-content ol { padding-left: 20px; }
+.detail-image { margin: 10px 0 0; padding: 12px; border: 1px solid var(--line); background: var(--soft); }
+.detail-sidebar { position: sticky; top: 88px; padding-left: 18px; border-left: 1px solid var(--line); }
+.detail-sidebar strong { display: block; margin-bottom: 10px; }
+.detail-sidebar a { display: block; padding: 6px 0; color: var(--muted); font-size: .83rem; }
+.detail-sidebar a:hover { color: var(--blue); }
+.note-box { padding: 16px 18px; background: var(--blue-soft); border-left: 3px solid var(--blue); }
+.note-box p { margin: 0; }
+
+.about-grid, .background-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 32px; }
+.about-copy { color: var(--muted); }
+.background-card { padding: 0; }
+.background-card h3 { margin: 8px 0; }
+.credential-list { margin: 12px 0 0; padding: 0; list-style: none; }
+.credential-list li { display: flex; justify-content: space-between; gap: 18px; padding: 9px 0; border-top: 1px solid var(--line); }
+.credential-list span { color: var(--muted); font-size: .82rem; }
+
+.site-footer { padding: 24px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .82rem; }
+.footer-inner { display: flex; justify-content: space-between; gap: 20px; }
+.footer-inner p { margin: 0; }
+.footer-inner a { color: var(--blue); }
+.text-link { color: var(--blue); font-weight: 600; }
+.project-list, .focus-grid, .journey-list { display: grid; gap: 18px; }
+
+@media (max-width: 900px) {
+  .hero-grid, .projects-hero-grid, .showcase-grid, .detail-layout, .about-grid, .background-grid { grid-template-columns: 1fr; }
+  .hero-panel, .project-summary-panel { padding: 22px 0 0; border-left: 0; border-top: 2px solid var(--blue); }
+  .detail-sidebar { position: static; order: -1; padding: 0 0 14px; border-left: 0; border-bottom: 1px solid var(--line); }
+  .directory-item { grid-template-columns: 42px minmax(0,1fr) 24px; }
+  .directory-tech { display: none; }
+}
+
+@media (max-width: 700px) {
+  .container { width: min(calc(100% - 28px), var(--container)); }
+  .section { padding: 56px 0; }
+  .header-inner { min-height: 58px; }
+  .logo-text { display: none; }
+  .main-nav { gap: 16px; font-size: .84rem; }
+  .main-nav a { padding: 18px 0 15px; }
+  .hero, .page-hero, .projects-hero, .detail-hero { padding: 64px 0 50px; }
+  .hero h1, .page-hero h1, .projects-hero h1, .detail-hero h1 { font-size: clamp(2.2rem,11vw,3.25rem); }
+  .skill-grid { grid-template-columns: 1fr; }
+  .skill-card:nth-child(odd), .skill-card:nth-child(even) { padding: 20px 0; border-left: 0; }
+  .skill-card:last-child:nth-child(odd) { grid-column: auto; }
+  .contact-box, .footer-inner { align-items: flex-start; flex-direction: column; }
+  .contact-box .button { width: 100%; }
+  .portfolio-table th, .portfolio-table td { padding: 13px 12px; }
+  .showcase-header { grid-template-columns: 1fr; gap: 4px; }
+  .showcase-tags { margin-left: 0; }
+  .project-showcase { padding: 38px 0; }
+  .directory-item { min-height: 76px; padding: 12px 4px; }
+  .directory-main small { white-space: normal; }
+}
+
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">본문으로 바로가기</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html" aria-label="Yujin 홈으로 이동">
+        <span class="logo-mark">YJ</span>
+        <span class="logo-text">Yujin Portfolio</span>
+      </a>
+      <nav class="main-nav" aria-label="주요 메뉴">
+        <a href="index.html">Yujin</a>
+        <a class="active" href="projects.html" aria-current="page">Projects</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="page-hero projects-hero section">
+      <div class="container projects-hero-grid">
+        <div>
+          <p class="eyebrow">Projects</p>
+          <h1>프로젝트</h1>
+          <p class="projects-hero-description">
+            팀 프로젝트에서 인프라 모니터링과 장애 검증을 담당하고,
+            이후 로그 추적, Linux 서버 운영, IaC, 서버리스 운영, 보안 자동화 실습을 이어갔습니다.
+          </p>
+        </div>
+        <aside class="project-summary-panel" aria-label="프로젝트 구성 요약">
+          <div>
+            <strong>01</strong>
+            <span>Team Project</span>
+          </div>
+          <div>
+            <strong>05</strong>
+            <span>Operations Labs</span>
+          </div>
+          <p>감지 → 추적 → 복구 → 자동화 흐름을 중심으로 정리했습니다.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="project-index-section section" aria-labelledby="project-index-title">
+      <div class="container">
+        <div class="section-heading project-index-heading">
+          <p class="eyebrow">Project Index</p>
+          <h2 id="project-index-title">전체 프로젝트를 한눈에 확인합니다.</h2>
+          <p>프로젝트명을 선택하면 아래의 상세 내용으로 이동합니다.</p>
+        </div>
+
+        <nav class="project-directory" aria-label="프로젝트 목차">
+          <section class="directory-group" aria-labelledby="team-directory-title">
+            <div class="directory-group-heading">
+              <div>
+                <span class="directory-kicker">Team Project</span>
+                <h3 id="team-directory-title">팀 프로젝트</h3>
+              </div>
+              <span class="directory-count">1 project</span>
+            </div>
+
+            <a class="directory-item directory-item-featured" href="#project-bukjeokbukjeok">
+              <span class="directory-number">01</span>
+              <span class="directory-main">
+                <strong>북적북적</strong>
+                <small>하이브리드 AI 도서 추천 서비스의 모니터링 구성과 장애 검증</small>
+              </span>
+              <span class="directory-tech">Kubernetes · Prometheus · Chaos Mesh</span>
+              <span class="directory-arrow" aria-hidden="true">↓</span>
+            </a>
+          </section>
+
+          <section class="directory-group" aria-labelledby="lab-directory-title">
+            <div class="directory-group-heading">
+              <div>
+                <span class="directory-kicker">Operations Labs</span>
+                <h3 id="lab-directory-title">개인 운영 실습</h3>
+              </div>
+              <span class="directory-count">5 projects</span>
+            </div>
+
+            <div class="directory-list">
+              <a class="directory-item" href="#project-elk">
+                <span class="directory-number">02</span>
+                <span class="directory-main"><strong>ELK 로그 추적</strong><small>Trace ID 기반 API 요청 흐름과 장애 원인 추적</small></span>
+                <span class="directory-tech">ELK · MDC · Logback</span>
+                <span class="directory-arrow" aria-hidden="true">↓</span>
+              </a>
+              <a class="directory-item" href="#project-ec2">
+                <span class="directory-number">03</span>
+                <span class="directory-main"><strong>EC2 Linux 운영</strong><small>서버 구성 자동화와 장애 1차 대응 흐름</small></span>
+                <span class="directory-tech">EC2 · Ansible · CloudWatch</span>
+                <span class="directory-arrow" aria-hidden="true">↓</span>
+              </a>
+              <a class="directory-item" href="#project-phase2">
+                <span class="directory-number">04</span>
+                <span class="directory-main"><strong>AWS 운영 고도화</strong><small>Private Subnet, 자동 복구, 로그 수집과 Terraform</small></span>
+                <span class="directory-tech">ASG · Terraform · SNS</span>
+                <span class="directory-arrow" aria-hidden="true">↓</span>
+              </a>
+              <a class="directory-item" href="#project-serverless">
+                <span class="directory-number">05</span>
+                <span class="directory-main"><strong>Serverless API 운영</strong><small>비용 최적화와 OIDC 기반 자동 배포</small></span>
+                <span class="directory-tech">Lambda · SQS · OIDC</span>
+                <span class="directory-arrow" aria-hidden="true">↓</span>
+              </a>
+              <a class="directory-item" href="#project-security">
+                <span class="directory-number">06</span>
+                <span class="directory-main"><strong>Security Auto Remediation</strong><small>위험한 SSH 규칙을 이벤트 기반으로 자동 조치</small></span>
+                <span class="directory-tech">CloudTrail · EventBridge · Config</span>
+                <span class="directory-arrow" aria-hidden="true">↓</span>
+              </a>
+            </div>
+          </section>
+        </nav>
+      </div>
+    </section>
+
+    <section class="project-detail-list section muted-section" aria-labelledby="project-detail-title">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Selected Work</p>
+          <h2 id="project-detail-title">프로젝트별 핵심 내용</h2>
+          <p>역할과 구현 내용, 검증 결과, 운영 관점에서의 의미를 중심으로 정리했습니다.</p>
+        </div>
+
+        <article id="project-bukjeokbukjeok" class="project-showcase team-showcase">
+          <header class="showcase-header">
+            <div class="showcase-number">01</div>
+            <div class="showcase-title-wrap">
+              <div class="showcase-meta">
+                <span>Team Project</span>
+                <span>2026.04.13 ~ 2026.05.14</span>
+                <span>Infra / Monitoring</span>
+              </div>
+              <h3>북적북적 — 하이브리드 기반 AI 도서 추천 서비스</h3>
+              <p>온프레미스 Kubernetes를 메인 서비스 영역으로, AWS EKS를 Failover 영역으로 구성한 팀 프로젝트에서 모니터링 대시보드, 알림, 부하·장애 실험을 담당했습니다.</p>
+            </div>
+          </header>
+
+          <div class="showcase-tags" aria-label="핵심 기술">
+            <span>AWS EKS</span><span>Kubernetes</span><span>Prometheus</span><span>Grafana</span>
+            <span>AlertManager</span><span>Locust</span><span>Chaos Mesh</span><span>Redis</span>
+          </div>
+
+          <div class="showcase-grid">
+            <figure class="showcase-image">
+              <img src="assets/images/projects/01-bukjeok/01-00-bukjeok-architecture.png" alt="온프레미스 Kubernetes 메인 서비스, AWS EKS Failover, 중앙 DB 및 모니터링 허브로 구성된 북적북적 프로젝트 아키텍처" loading="eager">
+              <figcaption>하이브리드 메인·Failover 구조와 중앙 모니터링 허브</figcaption>
+            </figure>
+
+            <div class="showcase-content">
+              <section class="showcase-block">
+                <p class="showcase-label">기여한 부분</p>
+                <ul>
+                  <li>Prometheus·Grafana 기반 모니터링 대시보드를 구성했습니다.</li>
+                  <li>AlertManager와 Slack을 연동해 장애 알림 흐름을 구현했습니다.</li>
+                  <li>Locust와 Chaos Mesh로 CPU·Memory 부하 및 Redis 장애를 검증했습니다.</li>
+                </ul>
+              </section>
+
+              <section class="showcase-result">
+                <p class="showcase-label">검증 및 개선 결과</p>
+                <strong>HPA 2 → 3개 확장 · 에러율 0% 유지</strong>
+                <p>Memory StressChaos의 OOMKill 원인을 분석하고 부하 주입량을 조정해 에러율을 5.41%에서 0%로 개선했습니다.</p>
+              </section>
+
+              <section class="showcase-block compact">
+                <p class="showcase-label">장애 실험</p>
+                <p>Redis 장애 시 Cache Hit율이 100%에서 0%로 감소하고 평균 응답시간이 증가하는 현상과 Slack Alert 수신을 확인했습니다.</p>
+              </section>
+
+              <div class="showcase-actions">
+                <a class="button primary" href="projects/bukjeokbukjeok.html">상세 글 보기</a>
+                <a class="button secondary" href="https://drive.google.com/file/d/1EWCl7eOblLP43PARuXrdPFRA8RQ70I6f/view?usp=sharing" target="_blank" rel="noopener noreferrer">팀 프로젝트 포트폴리오 ↗</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article id="project-elk" class="project-showcase">
+          <header class="showcase-header">
+            <div class="showcase-number">02</div>
+            <div class="showcase-title-wrap">
+              <div class="showcase-meta"><span>Individual Lab</span><span>Log Operations</span></div>
+              <h3>ELK 기반 웨이팅 API 로그 수집 및 장애 추적</h3>
+              <p>Spring Boot API에서 발생하는 로그를 ELK로 수집하고 Trace ID를 기준으로 요청 흐름과 장애 원인을 추적했습니다.</p>
+            </div>
+          </header>
+
+          <div class="showcase-tags" aria-label="핵심 기술">
+            <span>Spring Boot</span><span>Java 17</span><span>Logback</span><span>MDC</span>
+            <span>Logstash</span><span>Elasticsearch</span><span>Kibana</span><span>Docker Compose</span>
+          </div>
+
+          <div class="showcase-grid">
+            <figure class="showcase-image">
+              <img src="assets/images/projects/02-elk/02-00-elk-log-pipeline.png" alt="Spring Boot 로그가 Logback, Logstash, Elasticsearch, Kibana로 전달되는 흐름" loading="lazy">
+              <figcaption>파일 로그 수집부터 Kibana 조회까지의 로그 파이프라인</figcaption>
+            </figure>
+
+            <div class="showcase-content">
+              <section class="showcase-block">
+                <p class="showcase-label">핵심 구현</p>
+                <ul>
+                  <li>INFO·WARN·ERROR 로그를 목적에 따라 구분했습니다.</li>
+                  <li>전화번호를 마스킹하고 MDC 기반 Trace ID를 적용했습니다.</li>
+                  <li>Logback 파일 로그를 Logstash·Elasticsearch로 전달했습니다.</li>
+                </ul>
+              </section>
+              <section class="showcase-result">
+                <p class="showcase-label">운영 관점</p>
+                <strong>요청 단위 로그 추적 흐름 구성</strong>
+                <p>Kibana Discover에서 trace_id를 검색해 하나의 API 요청에 연결된 로그를 순서대로 확인했습니다.</p>
+              </section>
+              <div class="showcase-actions">
+                <a class="button primary" href="projects/elk-log-tracing.html">상세 글 보기</a>
+                <a class="button secondary" href="https://github.com/Yujajja/waiting-api-elk-logging" target="_blank" rel="noopener noreferrer">Repository ↗</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article id="project-ec2" class="project-showcase">
+          <header class="showcase-header">
+            <div class="showcase-number">03</div>
+            <div class="showcase-title-wrap">
+              <div class="showcase-meta"><span>Individual Lab</span><span>Linux Operations</span></div>
+              <h3>AWS EC2 기반 Linux 서버 운영 자동화 및 장애 1차 대응</h3>
+              <p>EC2 2대와 ALB를 구성하고 Ansible로 서버 설정을 자동화한 뒤, Nginx 장애를 재현해 감지·확인·복구 절차를 정리했습니다.</p>
+            </div>
+          </header>
+
+          <div class="showcase-tags" aria-label="핵심 기술">
+            <span>AWS EC2</span><span>ALB</span><span>Target Group</span><span>Ansible</span>
+            <span>Shell Script</span><span>Nginx</span><span>CloudWatch Alarm</span>
+          </div>
+
+          <div class="showcase-grid">
+            <figure class="showcase-image">
+              <img src="assets/images/projects/03-ec2-ops/03-00-ec2-ops-architecture.png" alt="사용자 요청이 ALB와 Target Group을 거쳐 EC2 두 대로 전달되고 CloudWatch와 Ansible이 연결된 흐름" loading="lazy">
+              <figcaption>EC2 2대, ALB, 자동화와 장애 감지 구성</figcaption>
+            </figure>
+
+            <div class="showcase-content">
+              <section class="showcase-block">
+                <p class="showcase-label">핵심 구현</p>
+                <ul>
+                  <li>EC2 2대와 ALB·Target Group Health Check를 구성했습니다.</li>
+                  <li>Ansible로 Nginx 설치와 설정 작업을 자동화했습니다.</li>
+                  <li>Shell Script로 서버 상태를 반복 점검할 수 있게 했습니다.</li>
+                </ul>
+              </section>
+              <section class="showcase-result">
+                <p class="showcase-label">장애 대응</p>
+                <strong>Nginx 중지 → Unhealthy 감지 → Runbook 복구</strong>
+                <p>CloudWatch Alarm과 Target Group 상태를 확인하고, Runbook에 따라 원인을 점검하고 서비스를 복구했습니다.</p>
+              </section>
+              <div class="showcase-actions">
+                <a class="button primary" href="projects/ec2-linux-operations.html">상세 글 보기</a>
+                <a class="button secondary" href="https://github.com/Yujajja/aws-linux-ops-practice" target="_blank" rel="noopener noreferrer">Repository ↗</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article id="project-phase2" class="project-showcase highlighted-showcase">
+          <header class="showcase-header">
+            <div class="showcase-number">04</div>
+            <div class="showcase-title-wrap">
+              <div class="showcase-meta"><span>Individual Lab</span><span>Advanced Cloud Operations &amp; IaC</span></div>
+              <h3>AWS Linux 서버 운영 고도화 — Private Subnet, ASG, Terraform</h3>
+              <p>1차 EC2 운영 구조를 Public·Private Subnet 분리, 접근 제어, 자동 복구, 로그 수집, 알림, IaC까지 확장했습니다.</p>
+            </div>
+          </header>
+
+          <div class="showcase-tags" aria-label="핵심 기술">
+            <span>VPC</span><span>Private Subnet</span><span>Bastion Host</span><span>NAT Gateway</span>
+            <span>Auto Scaling Group</span><span>CloudWatch</span><span>SNS</span><span>Terraform</span>
+          </div>
+
+          <div class="showcase-grid">
+            <figure class="showcase-image">
+              <img src="assets/images/projects/04-aws-ops/04-00-aws-ops-architecture.png" alt="Public 및 Private Subnet, ALB, Bastion, NAT Gateway, ASG, CloudWatch, Terraform으로 구성된 AWS 아키텍처" loading="lazy">
+              <figcaption>Private Web EC2의 접근 제어, 자동 복구와 운영 가시성 구성</figcaption>
+            </figure>
+
+            <div class="showcase-content">
+              <section class="showcase-block">
+                <p class="showcase-label">핵심 구현</p>
+                <ul>
+                  <li>Public·Private Subnet을 분리하고 Bastion 기반 관리 접속을 구성했습니다.</li>
+                  <li>NAT Gateway로 Private EC2의 아웃바운드 경로를 마련했습니다.</li>
+                  <li>ASG로 EC2 2대를 유지하고 비정상 인스턴스를 자동 교체했습니다.</li>
+                </ul>
+              </section>
+              <section class="showcase-result">
+                <p class="showcase-label">운영 고도화</p>
+                <strong>로그 수집 · 장애 알림 · 인프라 코드화</strong>
+                <p>CloudWatch Logs와 UnHealthyHostCount Alarm·SNS를 구성하고, 전체 리소스를 Terraform으로 생성·삭제했습니다.</p>
+              </section>
+              <div class="showcase-actions">
+                <a class="button primary" href="projects/aws-operations-phase2.html">상세 글 보기</a>
+                <a class="button secondary" href="https://github.com/Yujajja/aws-linux-ops-phase2" target="_blank" rel="noopener noreferrer">Repository ↗</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article id="project-serverless" class="project-showcase">
+          <header class="showcase-header">
+            <div class="showcase-number">05</div>
+            <div class="showcase-title-wrap">
+              <div class="showcase-meta"><span>Individual Lab</span><span>Serverless Operations</span></div>
+              <h3>AWS Serverless API 운영 — 비용 최적화와 CI/CD 자동 배포</h3>
+              <p>항상 실행되는 서버 없이 요청 단위로 동작하는 장애 접수 API를 구성하고, 실패 요청 분리와 OIDC 기반 자동 배포를 구현했습니다.</p>
+            </div>
+          </header>
+
+          <div class="showcase-tags" aria-label="핵심 기술">
+            <span>API Gateway</span><span>Lambda</span><span>DynamoDB</span><span>SQS</span>
+            <span>CloudWatch Alarm</span><span>SNS</span><span>GitHub Actions</span><span>OIDC</span>
+          </div>
+
+          <div class="showcase-grid">
+            <figure class="showcase-image">
+              <img src="assets/images/projects/05-serverless/05-00-serverless-api-architecture.png" alt="API Gateway, Lambda, DynamoDB, SQS, CloudWatch, SNS, GitHub Actions OIDC로 구성된 서버리스 운영 흐름" loading="lazy">
+              <figcaption>요청 처리, 실패 분리, 알림과 자동 배포 흐름</figcaption>
+            </figure>
+
+            <div class="showcase-content">
+              <section class="showcase-block">
+                <p class="showcase-label">핵심 구현</p>
+                <ul>
+                  <li>API Gateway·Lambda·DynamoDB On-Demand 구조를 구성했습니다.</li>
+                  <li>예상하지 못한 실패 요청을 SQS Failure Queue로 분리했습니다.</li>
+                  <li>SQS 지표를 CloudWatch Alarm·SNS 알림과 연결했습니다.</li>
+                </ul>
+              </section>
+              <section class="showcase-result">
+                <p class="showcase-label">비용 및 배포</p>
+                <strong>EC2 미사용 · 장기 Access Key 미사용</strong>
+                <p>GitHub Actions OIDC가 IAM Deploy Role을 일시적으로 위임받아 Lambda 코드를 자동 업데이트하도록 구성했습니다.</p>
+              </section>
+              <div class="showcase-actions">
+                <a class="button primary" href="projects/serverless-api-operations.html">상세 글 보기</a>
+                <a class="button secondary" href="https://github.com/Yujajja/aws-serverless-api-ops" target="_blank" rel="noopener noreferrer">Repository ↗</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article id="project-security" class="project-showcase">
+          <header class="showcase-header">
+            <div class="showcase-number">06</div>
+            <div class="showcase-title-wrap">
+              <div class="showcase-meta"><span>Individual Lab</span><span>Security Operations</span></div>
+              <h3>AWS Security Auto Remediation — 보안 그룹 위험 규칙 자동 조치</h3>
+              <p>보안 그룹에 위험한 SSH 규칙이 추가되는 이벤트를 감지하고, Lambda가 해당 규칙을 자동으로 되돌리는 보안 대응 흐름을 구현했습니다.</p>
+            </div>
+          </header>
+
+          <div class="showcase-tags" aria-label="핵심 기술">
+            <span>CloudTrail</span><span>EventBridge</span><span>Lambda</span><span>Security Group</span>
+            <span>AWS Config</span><span>CloudWatch Logs</span><span>SNS</span><span>Terraform</span>
+          </div>
+
+          <div class="showcase-grid">
+            <figure class="showcase-image">
+              <img src="assets/images/projects/06-security/06-00-security-remediation-flow.png" alt="CloudTrail과 EventBridge가 보안 그룹 변경을 감지하고 Lambda가 자동 조치하는 보안 자동화 흐름" loading="lazy">
+              <figcaption>위험 변경 감지, 자동 조치, 로그·알림·감사 흐름</figcaption>
+            </figure>
+
+            <div class="showcase-content">
+              <section class="showcase-block">
+                <p class="showcase-label">핵심 구현</p>
+                <ul>
+                  <li>CloudTrail의 AuthorizeSecurityGroupIngress 이벤트를 기록했습니다.</li>
+                  <li>EventBridge가 0.0.0.0/0 SSH 오픈 이벤트를 탐지하도록 구성했습니다.</li>
+                  <li>Lambda가 위험 규칙을 제거하고 CloudWatch Logs와 SNS에 결과를 남겼습니다.</li>
+                </ul>
+              </section>
+              <section class="showcase-result">
+                <p class="showcase-label">보안 운영 관점</p>
+                <strong>탐지와 자동 조치를 분리한 이벤트 기반 구조</strong>
+                <p>AWS Config로 별도 테스트 보안 그룹의 NON_COMPLIANT 상태를 확인하고, S3 Audit Bucket에 감사 로그를 보관했습니다.</p>
+              </section>
+              <div class="showcase-actions">
+                <a class="button primary" href="projects/security-auto-remediation.html">상세 글 보기</a>
+                <a class="button secondary" href="https://github.com/Yujajja/aws-security-auto-remediation" target="_blank" rel="noopener noreferrer">Repository ↗</a>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2026 Yujin. Cloud Operations Portfolio.</p>
+      <a href="#main-content">맨 위로 ↑</a>
+    </div>
+  </footer>
+</body>
+</html>
