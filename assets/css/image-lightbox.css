@@ -1,0 +1,110 @@
+.showcase-image img,
+.detail-image img {
+  cursor: zoom-in;
+}
+
+.showcase-image img:hover,
+.detail-image img:hover {
+  opacity: .97;
+}
+
+.showcase-image img:focus-visible,
+.detail-image img:focus-visible {
+  outline: 2px solid var(--blue, #2563eb);
+  outline-offset: 3px;
+}
+
+.image-lightbox[hidden] {
+  display: none;
+}
+
+.image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: clamp(12px, 3vw, 40px);
+  overflow: hidden;
+  background: rgba(0, 0, 0, .88);
+  opacity: 0;
+  transition: opacity .14s ease;
+}
+
+.image-lightbox.is-open {
+  opacity: 1;
+}
+
+.image-lightbox__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 94vw;
+  max-height: 90vh;
+  margin: 0;
+}
+
+.image-lightbox__image {
+  display: block;
+  width: auto;
+  max-width: 94vw;
+  height: auto;
+  max-height: 90vh;
+  object-fit: contain;
+  background: #fff;
+}
+
+.image-lightbox.has-caption .image-lightbox__image {
+  max-height: calc(90vh - 2.5rem);
+}
+
+.image-lightbox__caption {
+  max-width: 94vw;
+  margin: 8px 0 0;
+  color: #fff;
+  font-size: .82rem;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.image-lightbox__close {
+  position: fixed;
+  top: max(12px, env(safe-area-inset-top));
+  right: max(12px, env(safe-area-inset-right));
+  z-index: 1;
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: #fff;
+  background: rgba(0, 0, 0, .45);
+  border: 1px solid rgba(255, 255, 255, .65);
+  border-radius: 50%;
+  font: inherit;
+  font-size: 1.55rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.image-lightbox__close:hover,
+.image-lightbox__close:focus-visible {
+  background: rgba(0, 0, 0, .72);
+}
+
+.image-lightbox__close:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image-lightbox {
+    transition: none;
+  }
+}
