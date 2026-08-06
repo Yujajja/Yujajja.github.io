@@ -299,7 +299,7 @@ a { color: inherit; text-decoration: none; }
             <span>Team Project</span>
           </div>
           <div>
-            <strong>05</strong>
+            <strong>08</strong>
             <span>Operations Labs</span>
           </div>
           <p>감지 → 추적 → 복구 → 자동화 흐름을 중심으로 정리했습니다.</p>
@@ -342,7 +342,7 @@ a { color: inherit; text-decoration: none; }
                 <span class="directory-kicker">Operations Labs</span>
                 <h3 id="lab-directory-title">개인 운영 실습</h3>
               </div>
-              <span class="directory-count">5 projects</span>
+              <span class="directory-count">8 projects</span>
             </div>
 
             <div class="directory-list">
@@ -374,6 +374,24 @@ a { color: inherit; text-decoration: none; }
                 <span class="directory-number">06</span>
                 <span class="directory-main"><strong>Security Auto Remediation</strong><small>위험한 SSH 규칙을 이벤트 기반으로 자동 조치</small></span>
                 <span class="directory-tech">CloudTrail · EventBridge · Config</span>
+                <span class="directory-arrow" aria-hidden="true">↓</span>
+              </a>
+              <a class="directory-item" href="#project-observability">
+                <span class="directory-number">07</span>
+                <span class="directory-main"><strong>AWS CloudOps 관측성 통합 운영</strong><small>ECS 서비스의 로그·지표·경보를 연결한 운영 관측성 구성</small></span>
+                <span class="directory-tech">ECS · CloudWatch · RDS</span>
+                <span class="directory-arrow" aria-hidden="true">↓</span>
+              </a>
+              <a class="directory-item" href="#project-ai-cloudops">
+                <span class="directory-number">08</span>
+                <span class="directory-main"><strong>AWS AI CloudOps Read-only Assistant</strong><small>AWS 운영 상태와 장애 로그를 조회하는 AI 운영 보조 도구</small></span>
+                <span class="directory-tech">boto3 · LangGraph · Streamlit</span>
+                <span class="directory-arrow" aria-hidden="true">↓</span>
+              </a>
+              <a class="directory-item" href="#project-ncp-3tier">
+                <span class="directory-number">09</span>
+                <span class="directory-main"><strong>NCP 3-Tier 운영 로그 분석</strong><small>Web·App 로그 연결과 Cloud Insight 기반 상태 감시</small></span>
+                <span class="directory-tech">NCP · Cloud Log Analytics · Terraform</span>
                 <span class="directory-arrow" aria-hidden="true">↓</span>
               </a>
             </div>
@@ -654,6 +672,135 @@ a { color: inherit; text-decoration: none; }
               <div class="showcase-actions">
                 <a class="button primary" href="projects/security-auto-remediation.html">상세 글 보기</a>
                 <a class="button secondary" href="https://github.com/Yujajja/aws-security-auto-remediation" target="_blank" rel="noopener noreferrer">Repository ↗</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article id="project-observability" class="project-showcase">
+          <header class="showcase-header">
+            <div class="showcase-number">07</div>
+            <div class="showcase-title-wrap">
+              <div class="showcase-meta"><span>Individual Lab</span><span>Observability Operations</span></div>
+              <h3>AWS CloudOps 관측성 통합 운영 실습</h3>
+              <p>ECS Fargate 기반 FastAPI 서비스에 RDS MySQL Multi-AZ를 연결하고, 구조화 로그와 지표·경보·대시보드를 하나의 운영 관측성 흐름으로 구성했습니다.</p>
+            </div>
+          </header>
+
+          <div class="showcase-tags" aria-label="핵심 기술">
+            <span>ECS Fargate</span><span>Application Load Balancer</span><span>RDS MySQL Multi-AZ</span><span>FastAPI</span>
+            <span>CloudWatch Logs</span><span>Logs Insights</span><span>CloudWatch Dashboard</span><span>SNS</span>
+          </div>
+
+          <div class="showcase-grid">
+            <figure class="showcase-image">
+              <img src="assets/images/projects/07-observability/07-00-cloudops-observability-architecture.png" alt="Application Load Balancer, ECS Fargate, RDS MySQL Multi-AZ와 CloudWatch로 구성된 서비스 운영 관측성 아키텍처" loading="lazy">
+              <figcaption>ECS 서비스의 요청 처리, 로그 분석, 지표 시각화와 장애 알림 흐름</figcaption>
+            </figure>
+
+            <div class="showcase-content">
+              <section class="showcase-block">
+                <p class="showcase-label">핵심 구현</p>
+                <ul>
+                  <li>ALB와 Target Group을 통해 ECS Fargate의 FastAPI 서비스로 요청을 전달했습니다.</li>
+                  <li>요청 로그를 JSON으로 구조화하고 trace_id, path, status, duration_ms를 기록했습니다.</li>
+                  <li>CloudWatch Logs와 Logs Insights, Dashboard, ALB 5xx Alarm·SNS를 연결했습니다.</li>
+                </ul>
+              </section>
+              <section class="showcase-result">
+                <p class="showcase-label">장애 분석</p>
+                <strong>로그 기반 RDS 연결 오류 확인 · 이미지 수정 후 재배포</strong>
+                <p>CloudWatch Logs에서 Python 패키지 누락을 확인하고 Docker 이미지를 수정한 뒤 ECR과 ECS에 다시 배포해 DB 연결을 복구했습니다.</p>
+              </section>
+              <div class="showcase-actions">
+                <a class="button primary" href="projects/aws-cloudops-observability.html">상세 글 보기</a>
+                <a class="button secondary" href="https://github.com/Yujajja/aws-cloudops-observability-lab" target="_blank" rel="noopener noreferrer">Repository ↗</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article id="project-ai-cloudops" class="project-showcase">
+          <header class="showcase-header">
+            <div class="showcase-number">08</div>
+            <div class="showcase-title-wrap">
+              <div class="showcase-meta"><span>Individual Lab</span><span>AI Cloud Operations</span></div>
+              <h3>AWS AI CloudOps Read-only Assistant</h3>
+              <p>boto3로 AWS 운영 상태와 오류 로그를 Read-only로 조회하고, 규칙 기반 분석과 생성형 AI 분석 결과를 CLI와 Dashboard에서 확인하도록 구성했습니다.</p>
+            </div>
+          </header>
+
+          <div class="showcase-tags" aria-label="핵심 기술">
+            <span>boto3</span><span>ECS Fargate</span><span>CloudWatch</span><span>LangGraph</span>
+            <span>OpenAI Agents SDK</span><span>LangChain</span><span>Rich CLI</span><span>Streamlit</span>
+          </div>
+
+          <div class="showcase-grid">
+            <figure class="showcase-image">
+              <img src="assets/images/projects/08-ai-cloudops/08-00-ai-cloudops-architecture.png" alt="AWS 운영 상태를 boto3로 조회하고 규칙 기반 분석과 AI 분석을 거쳐 Rich CLI와 Streamlit에 표시하는 구조" loading="lazy">
+              <figcaption>AWS Read-only 조회, 규칙·AI 분석과 운영 화면 출력 흐름</figcaption>
+            </figure>
+
+            <div class="showcase-content">
+              <section class="showcase-block">
+                <p class="showcase-label">핵심 구현</p>
+                <ul>
+                  <li>ECS Service, Target Health, CloudWatch Alarm과 최근 ERROR 로그를 boto3로 조회했습니다.</li>
+                  <li>규칙 기반 분석과 LangGraph, OpenAI Agents SDK, LangChain 기반 분석 흐름을 구성했습니다.</li>
+                  <li>운영 상태와 분석 결과를 Rich CLI와 Streamlit Dashboard에 표시했습니다.</li>
+                </ul>
+              </section>
+              <section class="showcase-result">
+                <p class="showcase-label">운영 관점</p>
+                <strong>AWS 리소스를 변경하지 않는 Read-only 장애 진단</strong>
+                <p>ALB Target 5xx 경보와 구조화된 ERROR 로그를 함께 조회해 원인 후보, 판단 근거와 다음 확인 항목을 제시하도록 구성했습니다.</p>
+              </section>
+              <div class="showcase-actions">
+                <a class="button primary" href="projects/ai-cloudops-readonly-assistant.html">상세 글 보기</a>
+                <a class="button secondary" href="https://github.com/Yujajja/ai-cloudops-readonly-assistant" target="_blank" rel="noopener noreferrer">Repository ↗</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article id="project-ncp-3tier" class="project-showcase">
+          <header class="showcase-header">
+            <div class="showcase-number">09</div>
+            <div class="showcase-title-wrap">
+              <div class="showcase-meta"><span>Individual Lab</span><span>NCP Operations &amp; Log Analysis</span></div>
+              <h3>NCP 3-Tier 운영 로그 분석 실습</h3>
+              <p>AWS 중심의 클라우드 운영 경험을 NCP로 확장해 Web·App·DB 계층을 분리하고, trace_id 기반 로그 추적과 Cloud Insight 상태 감시를 검증했습니다.</p>
+            </div>
+          </header>
+
+          <div class="showcase-tags" aria-label="핵심 기술">
+            <span>NAVER Cloud Platform</span><span>Public Load Balancer</span><span>Nginx</span><span>Internal Load Balancer</span>
+            <span>FastAPI Auto Scaling Group</span><span>Cloud DB for MySQL</span><span>Cloud Log Analytics</span><span>Cloud Insight</span>
+          </div>
+
+          <div class="showcase-grid">
+            <figure class="showcase-image">
+              <img src="assets/images/projects/09-ncp-3tier/09-00-ncp-3tier-ops-flow.png" alt="Public Load Balancer, Nginx Web Server, Internal Load Balancer, FastAPI Auto Scaling Group와 Cloud DB for MySQL로 구성된 NCP 3-Tier 운영 흐름" loading="lazy">
+              <figcaption>NCP 3-Tier 요청 처리, 로그 수집·분석과 상태 감시 흐름</figcaption>
+            </figure>
+
+            <div class="showcase-content">
+              <section class="showcase-block">
+                <p class="showcase-label">핵심 구현</p>
+                <ul>
+                  <li>Public·Internal Application Load Balancer로 Web과 App 계층의 요청 경로를 분리했습니다.</li>
+                  <li>Nginx와 FastAPI의 JSON 로그에 동일한 trace_id를 기록해 요청 흐름을 연결했습니다.</li>
+                  <li>Cloud Log Analytics와 Cloud Insight Dashboard에서 로그와 주요 지표를 확인했습니다.</li>
+                </ul>
+              </section>
+              <section class="showcase-result">
+                <p class="showcase-label">운영 검증</p>
+                <strong>Web·App 로그 상관분석 · Warning Event 발생 확인</strong>
+                <p>지연과 500 오류 요청을 발생시켜 계층별 로그 차이를 확인하고, CPU 부하 후 Cloud Insight Event Rule의 Warning 상태를 검증했습니다.</p>
+              </section>
+              <div class="showcase-actions">
+                <a class="button primary" href="projects/ncp-3tier-ops-log-analysis.html">상세 글 보기</a>
+                <a class="button secondary" href="https://github.com/Yujajja/ncp-3tier-ops-log-analysis" target="_blank" rel="noopener noreferrer">Repository ↗</a>
               </div>
             </div>
           </div>
