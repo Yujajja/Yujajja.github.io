@@ -418,7 +418,7 @@ a { color: inherit; text-decoration: none; }
                 <span>Infra / Monitoring</span>
               </div>
               <h3>북적북적 — 하이브리드 기반 AI 도서 추천 서비스</h3>
-              <p>온프레미스 Kubernetes를 메인 서비스 영역으로, AWS EKS를 Failover 영역으로 구성한 팀 프로젝트에서 모니터링 대시보드, 알림, 부하·장애 실험을 담당했습니다.</p>
+              <p>독서 설문으로 생성한 페르소나와 공공 도서관·도서 데이터를 활용해 개인화된 도서를 추천하는 AI 서비스입니다. 팀은 EKS, kubeadm 클러스터와 VPC3 공유 허브를 연결한 하이브리드 인프라를 구성했으며, 저는 모니터링 수집 구조와 장애 검증 환경 설계를 담당했습니다.</p>
             </div>
           </header>
 
@@ -437,9 +437,10 @@ a { color: inherit; text-decoration: none; }
               <section class="showcase-block">
                 <p class="showcase-label">기여한 부분</p>
                 <ul>
-                  <li>Prometheus·Grafana 기반 모니터링 대시보드를 구성했습니다.</li>
-                  <li>AlertManager와 Slack을 연동해 장애 알림 흐름을 구현했습니다.</li>
-                  <li>Locust와 Chaos Mesh로 CPU·Memory 부하 및 Redis 장애를 검증했습니다.</li>
+                  <li>하이브리드 인프라 설계 논의에 참여하고 멀티클러스터 모니터링·장애 검증 구조를 설계했습니다.</li>
+                  <li>VPC1·VPC2의 Prometheus 메트릭을 VPC3 중앙 Prometheus로 수집하는 Federation 흐름을 구성했습니다.</li>
+                  <li>클러스터 비교용 Grafana Dashboard와 AlertManager–Slack 장애 알림 흐름을 구성했습니다.</li>
+                  <li>Locust·Chaos Mesh 기반 CPU·Memory 부하 및 Redis 장애 시나리오를 설계하고 검증했습니다.</li>
                 </ul>
               </section>
 
