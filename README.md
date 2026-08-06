@@ -1,11 +1,11 @@
 # Yujin Cloud Operations Portfolio
 
-AWS, Linux, 모니터링, 로그 추적, 장애 대응, IaC, 서버리스 및 보안 자동화 경험을 정리한 정적 GitHub Pages 웹 이력서입니다.
+AWS, NCP, Linux, 모니터링, 로그 추적, 장애 대응, IaC, 서버리스, 보안 자동화 및 AI CloudOps 경험을 정리한 정적 GitHub Pages 웹 이력서입니다.
 
 ## 페이지 구성
 
 - `Yujin` — 소개, 자격증, 교육내역, 기술 스택, Contact
-- `Projects` — 팀 프로젝트 1개와 AWS/Linux 운영 실습 5개
+- `Projects` — 팀 프로젝트 1개와 클라우드 운영 실습 8개
 
 ## 파일 구조
 
@@ -30,15 +30,24 @@ AWS, Linux, 모니터링, 로그 추적, 장애 대응, IaC, 서버리스 및 �
 │        │  └─ 04-00-aws-ops-architecture.png
 │        ├─ 05-serverless/
 │        │  └─ 05-00-serverless-api-architecture.png
-│        └─ 06-security/
-│           └─ 06-00-security-remediation-flow.png
+│        ├─ 06-security/
+│        │  └─ 06-00-security-remediation-flow.png
+│        ├─ 07-observability/
+│        │  └─ 07-00-cloudops-observability-architecture.png
+│        ├─ 08-ai-cloudops/
+│        │  └─ 08-00-ai-cloudops-architecture.png
+│        └─ 09-ncp-3tier/
+│           └─ 09-00-ncp-3tier-ops-flow.png
 └─ projects/
    ├─ bukjeokbukjeok.html
    ├─ elk-log-tracing.html
    ├─ ec2-linux-operations.html
    ├─ aws-operations-phase2.html
    ├─ serverless-api-operations.html
-   └─ security-auto-remediation.html
+   ├─ security-auto-remediation.html
+   ├─ aws-cloudops-observability.html
+   ├─ ai-cloudops-readonly-assistant.html
+   └─ ncp-3tier-ops-log-analysis.html
 ```
 
 ## 이미지 이름 규칙
