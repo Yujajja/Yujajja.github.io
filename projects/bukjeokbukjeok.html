@@ -284,7 +284,7 @@ a { color: inherit; text-decoration: none; }
         <div class="breadcrumb"><a href="../projects.html">Projects</a> / Team Project</div>
         <p class="eyebrow">Team Project · Infra / Monitoring</p>
         <h1>북적북적 — 하이브리드 기반 AI 도서 추천 서비스</h1>
-        <p class="detail-lead">온프레미스 Kubernetes 메인 서비스와 AWS EKS Failover 영역을 포함한 하이브리드 구조에서 모니터링 구성, 알림 연동, 부하·장애 검증을 담당했습니다.</p>
+        <p class="detail-lead">팀의 하이브리드 인프라 설계 과정에 참여했으며, 그중 멀티클러스터 모니터링 수집 구조와 장애 검증 환경 설계를 담당했습니다.</p>
         <div class="detail-actions">
           <a class="button primary" href="https://drive.google.com/file/d/1EWCl7eOblLP43PARuXrdPFRA8RQ70I6f/view?usp=sharing" target="_blank" rel="noopener noreferrer">팀 프로젝트 포트폴리오</a>
           <a class="button secondary" href="../projects.html">프로젝트 목록</a>
@@ -296,93 +296,94 @@ a { color: inherit; text-decoration: none; }
       <div class="container detail-layout">
         <article class="detail-content">
           <section id="reason">
-            <h2>1. 프로젝트 개요와 담당 역할</h2>
-            <p>북적북적은 하이브리드 환경에서 운영되는 AI 도서 추천 서비스입니다. 저는 Infra / Monitoring 역할로 Prometheus와 Grafana 기반 모니터링, AlertManager와 Slack 알림 연동, Locust와 Chaos Mesh를 활용한 부하·장애 실험을 담당했습니다.</p>
+            <h2>1. 프로젝트 배경과 서비스 목적</h2>
+            <p>북적북적은 사용자의 독서 성향을 분석해 독서 페르소나를 생성하고, 공공 도서관 및 도서 데이터를 활용해 개인화된 도서를 추천하는 팀 프로젝트입니다.</p>
+            <p>서비스는 독서 설문 기반 페르소나 분석, AWS Bedrock Claude 연동, 개인화된 도서 추천, 공공 도서관 데이터 연동, 도서 검색과 대출 가능 여부 조회 기능을 중심으로 구성했습니다. 이 내용은 팀이 함께 개발한 전체 서비스 범위이며, 제 공식 담당 범위는 아래의 모니터링과 장애 검증 인프라입니다.</p>
           </section>
 
           <section id="architecture">
-            <h2>2. 전체 아키텍처</h2>
+            <h2>2. 전체 하이브리드 아키텍처</h2>
             <div class="detail-image"><img src="../assets/images/projects/01-bukjeok/01-00-bukjeok-architecture.png" alt="온프레미스 Kubernetes 메인 서비스, AWS EKS Failover, 중앙 DB 및 모니터링 허브로 구성된 북적북적 프로젝트 아키텍처"></div>
+            <p>팀은 역할이 다른 세 VPC를 VPC Peering으로 연결해 클라우드와 온프레미스 환경을 함께 운영할 수 있는 하이브리드 구조를 구성했습니다.</p>
             <ul>
-              <li>온프레미스 Kubernetes 영역을 메인 서비스로 구성했습니다.</li>
-              <li>AWS EKS 영역은 클라우드 Failover 구조로 활용했습니다.</li>
-              <li>별도 영역에서 RDS, Prometheus, Grafana, OpenSearch를 중앙 관리했습니다.</li>
+              <li><strong>VPC1 — 클라우드 클러스터:</strong> AWS EKS, ALB, Karpenter, HPA</li>
+              <li><strong>VPC2 — 온프레미스 가정 클러스터:</strong> EC2 기반 kubeadm Kubernetes, MetalLB, Envoy Gateway. 온프레미스 환경을 모사하기 위해 AWS 관리형 서비스 사용을 최소화했습니다.</li>
+              <li><strong>VPC3 — 공유 인프라 허브:</strong> RDS PostgreSQL, Prometheus, Grafana, AlertManager, ArgoCD, OpenSearch</li>
+            </ul>
+            <p>위 구성은 팀 전체 아키텍처이며, 제가 모든 리소스를 단독으로 설계하거나 구축한 것은 아닙니다.</p>
+          </section>
+
+          <section id="role">
+            <h2>3. 담당 역할과 설계 기여</h2>
+            <p>하이브리드 인프라 설계 논의에 참여했으며, VPC1 EKS와 VPC2 kubeadm 환경을 함께 확인할 수 있는 관측 구조와 실제 장애 상황을 재현하는 검증 환경을 구체화했습니다.</p>
+            <ul>
+              <li>각 클러스터의 Prometheus 메트릭을 VPC3 중앙 Prometheus로 수집하는 Federation 흐름 구성</li>
+              <li>Grafana에서 두 클러스터 상태를 비교하는 Dashboard와 Failover 관측 항목 구성</li>
+              <li>Alert Rules와 AlertManager–Slack 장애 알림 흐름 구성</li>
+              <li>Locust와 Chaos Mesh를 활용한 CPU, Memory, Redis 장애 테스트 시나리오 설계</li>
             </ul>
           </section>
 
-          <section id="technology">
-            <h2>3. 사용 기술</h2>
+          <section id="monitoring">
+            <h2>4. 모니터링 아키텍처</h2>
+            <p>VPC1과 VPC2에 Prometheus 및 Node Exporter를 배치하고, VPC3 중앙 Prometheus가 Federation 방식으로 두 클러스터의 메트릭을 수집하도록 구성했습니다.</p>
             <ul>
-              <li><strong>Infrastructure</strong> — AWS EC2, EKS, VPC, S3, CloudFront, Route 53, RDS, OpenSearch</li>
-              <li><strong>Container</strong> — Kubernetes, Docker, HPA</li>
-              <li><strong>Monitoring</strong> — Prometheus, Grafana, AlertManager, Slack</li>
-              <li><strong>Test</strong> — Locust, Chaos Mesh</li>
-              <li><strong>CI/CD</strong> — GitHub Actions, Argo CD</li>
+              <li>CPU, Memory, Pod 상태, HTTP 요청, 응답시간, 에러율을 주요 관측 지표로 설정했습니다.</li>
+              <li>Backend ServiceMonitor를 통해 Spring Boot 메트릭을 수집했습니다.</li>
+              <li>Envoy Gateway PodMonitor를 통해 Gateway 메트릭을 수집했습니다.</li>
+              <li>Grafana Dashboard에서 클러스터별 상태를 비교하고, Alert Rules와 AlertManager–Slack 연동으로 장애 알림을 확인했습니다.</li>
+            </ul>
+            <p>Health Score와 Failover 관측 항목은 팀 전체 시스템의 모니터링 설계에 포함된 내용이며, 전체 Failover Lambda와 라우팅 로직을 제가 단독 구현한 것은 아닙니다.</p>
+          </section>
+
+          <section id="scenario">
+            <h2>5. 장애 테스트 시나리오</h2>
+            <ul>
+              <li><strong>CPU / Memory 부하:</strong> Locust로 트래픽을 발생시키고 Chaos Mesh로 부하를 주입해 HPA의 스케일 아웃과 서비스 에러율을 함께 확인했습니다.</li>
+              <li><strong>Memory StressChaos:</strong> 메모리 부하가 Pod의 처리 범위를 넘을 때 발생하는 OOMKill과 에러율 변화를 확인한 뒤 주입량을 조정해 재검증했습니다.</li>
+              <li><strong>Redis 장애:</strong> 캐시 장애를 재현하고 Cache Hit율, 평균 응답시간, Slack Alert 수신 여부를 확인했습니다.</li>
             </ul>
           </section>
 
-          <section id="implementation">
-            <h2>4. 담당 구현 흐름</h2>
-            <ol>
-              <li>Prometheus 수집 지표를 기준으로 Grafana 대시보드를 구성했습니다.</li>
-              <li>AlertManager와 Slack을 연동해 이상 상태 알림 수신 흐름을 확인했습니다.</li>
-              <li>Locust로 트래픽을 발생시키고 CPU와 Memory 부하 상황을 검증했습니다.</li>
-              <li>Chaos Mesh를 활용해 Memory Stress와 Redis 장애를 재현했습니다.</li>
-              <li>실험 결과를 바탕으로 에러율, HPA 동작, 응답시간과 Cache Hit 변화를 확인했습니다.</li>
-            </ol>
-          </section>
-
-          <section id="test">
-            <h2>5. 테스트와 검증 결과</h2>
+          <section id="result">
+            <h2>6. 검증 결과</h2>
             <ul>
-              <li>CPU / Memory 부하 상황에서 HPA가 2개에서 3개로 스케일 아웃되는 것을 확인했습니다.</li>
-              <li>스케일 아웃 과정에서 에러율 0%를 유지했습니다.</li>
-              <li>Redis 장애 시 Cache Hit율이 100%에서 0%로 감소하고 평균 응답시간이 증가하는 것을 확인했습니다.</li>
-              <li>장애 상황에서 Slack Alert가 정상적으로 수신되는 것을 확인했습니다.</li>
+              <li>CPU / Memory 부하에서 HPA가 Pod 2개에서 3개로 확장되는 것을 확인했고, 조정 후 스케일 아웃 과정의 에러율은 0%를 유지했습니다.</li>
+              <li>Memory StressChaos 초기 테스트에서는 OOMKill과 최대 5.41%의 에러율을 확인했으며, 재검증 결과 에러율 0%를 확인했습니다.</li>
+              <li>Redis 장애 시 Cache Hit율이 100%에서 0%로 감소하고 평균 응답시간이 증가했으며, Slack Alert가 정상 수신되었습니다.</li>
+              <li>Redis 실험을 통해 Cache Miss 메트릭과 RDS Fallback 흐름을 추가로 보완할 필요성을 도출했습니다.</li>
             </ul>
           </section>
 
           <section id="troubleshooting">
-            <h2>6. 트러블슈팅</h2>
+            <h2>7. 트러블슈팅</h2>
             <h3>Memory StressChaos 적용 후 OOMKill 발생</h3>
-            <p>초기 부하 주입에서 OOMKill이 발생하며 에러율이 5.41%까지 증가했습니다. 원인을 분석한 뒤 부하 주입량을 조정해 에러율을 0%로 개선했습니다.</p>
+            <p>초기 테스트에서 OOMKill이 발생하고 에러율이 5.41%까지 증가했습니다. 단순히 리소스 제한을 높이는 방식 대신 부하 주입량을 조정해 Pod가 감당할 수 있는 범위에서 HPA 동작을 다시 검증했고, 최종 에러율 0%를 확인했습니다.</p>
+            <h3>Redis 장애 이후 추가 관측 필요</h3>
+            <p>Cache Hit율과 응답시간, Slack Alert로 장애 영향은 확인했지만 Cache Miss를 직접 보여 주는 메트릭과 RDS Fallback 흐름은 추가 보완이 필요하다고 판단했습니다.</p>
           </section>
 
           <section id="operations">
-            <h2>7. 운영 관점에서 신경 쓴 점</h2>
+            <h2>8. 운영 관점에서 배운 점</h2>
+            <div class="note-box"><p>모니터링은 대시보드를 만드는 데서 끝나지 않고, 실제 장애를 재현해 지표·확장·알림이 하나의 운영 흐름으로 작동하는지 확인해야 의미가 있다는 점을 배웠습니다.</p></div>
             <ul>
-              <li>지표를 시각화하는 데서 끝내지 않고 실제 장애 상황에서 알림이 수신되는지 검증했습니다.</li>
-              <li>HPA가 동작하는지뿐 아니라 스케일 아웃 중 서비스 에러율도 함께 확인했습니다.</li>
-              <li>Redis 장애 시 Cache Hit와 응답시간 변화를 비교해 캐시 장애가 서비스에 미치는 영향을 확인했습니다.</li>
-            </ul>
-          </section>
-
-          <section id="learned">
-            <h2>8. 프로젝트를 통해 배운 점</h2>
-            <div class="note-box"><p>모니터링은 대시보드를 만드는 작업만이 아니라, 장애를 재현하고 지표와 알림이 실제 운영 흐름에서 유효한지 검증하는 과정이라는 점을 배웠습니다.</p></div>
-          </section>
-
-          <section id="improvement">
-            <h2>9. 향후 개선 방향</h2>
-            <ul>
-              <li>Cache Miss 전용 메트릭을 추가해 Redis 장애 영향을 더 명확하게 확인합니다.</li>
-              <li>캐시 장애 시 RDS Fallback 흐름과 DB 부하를 함께 검증합니다.</li>
-              <li>Failover 전환 조건과 복구 절차를 Runbook 형태로 구체화합니다.</li>
+              <li>멀티클러스터 환경에서는 같은 기준의 지표를 중앙에서 수집해야 클러스터 상태와 Failover 전후 변화를 비교할 수 있습니다.</li>
+              <li>HPA의 확장 여부뿐 아니라 확장 과정의 에러율까지 함께 봐야 사용자 관점의 안정성을 판단할 수 있습니다.</li>
+              <li>장애 알림 수신만으로 끝내지 않고 Cache Hit와 응답시간 같은 서비스 지표를 함께 확인해야 장애 영향을 구체화할 수 있습니다.</li>
             </ul>
           </section>
         </article>
 
         <aside class="detail-sidebar" aria-label="상세 글 목차">
           <strong>Contents</strong>
-          <a href="#reason">1. 개요와 역할</a>
-          <a href="#architecture">2. 전체 아키텍처</a>
-          <a href="#technology">3. 사용 기술</a>
-          <a href="#implementation">4. 담당 구현</a>
-          <a href="#test">5. 테스트 결과</a>
-          <a href="#troubleshooting">6. 트러블슈팅</a>
-          <a href="#operations">7. 운영 관점</a>
-          <a href="#learned">8. 배운 점</a>
-          <a href="#improvement">9. 개선 방향</a>
+          <a href="#reason">1. 배경과 목적</a>
+          <a href="#architecture">2. 하이브리드 아키텍처</a>
+          <a href="#role">3. 역할과 기여</a>
+          <a href="#monitoring">4. 모니터링</a>
+          <a href="#scenario">5. 장애 시나리오</a>
+          <a href="#result">6. 검증 결과</a>
+          <a href="#troubleshooting">7. 트러블슈팅</a>
+          <a href="#operations">8. 운영 관점</a>
         </aside>
       </div>
     </section>
