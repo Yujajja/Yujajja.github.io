@@ -1,6 +1,20 @@
-# Yujin Cloud Operations Portfolio
+# Yujin Infrastructure Operations Resume
 
-AWS, NCP, Linux, 모니터링, 로그 추적, 장애 대응, IaC, 서버리스, 보안 자동화 및 AI CloudOps 경험을 정리한 정적 GitHub Pages 웹 이력서입니다.
+Linux와 클라우드 환경을 직접 구성하며 서버·클라우드 운영, 모니터링, 로그 분석, 장애 1차 대응, 자동화와 IaC 역량을 쌓아 온 주니어 인프라 운영 엔지니어의 정적 GitHub Pages 웹 이력서입니다.
+
+## 지원 직무와 핵심 역량
+
+- 지원 직무: 인프라 운영 · 클라우드 운영 · 시스템·서버 관제 · 장애 1차 대응
+- 핵심 역량: 서버 및 클라우드 인프라 운영, 모니터링과 로그 분석, 장애 1차 대응, 운영 자동화, Infrastructure as Code, 컨테이너 기반 배포와 운영
+
+## 기술 스택
+
+- **Cloud / Infrastructure**: AWS, NAVER Cloud Platform, EC2, Lambda, Terraform
+- **Container / Deployment**: Docker / Compose, Kubernetes / EKS, ECS Fargate, ECR, GitHub Actions (OIDC), Argo CD
+- **Monitoring / Logging**: CloudWatch, Prometheus, Grafana, AlertManager, ELK, OpenSearch
+- **Application / Automation**: Python, FastAPI, Spring Boot, Shell Script, Ansible
+- **Test / Failure Validation**: Locust, Chaos Mesh
+- **OS / Network / Database**: Linux, Nginx, VPC, ALB, RDS (MySQL/PostgreSQL), Redis
 
 ## 페이지 구성
 

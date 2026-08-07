@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Yujin의 AWS, Linux, 모니터링, 장애 대응, IaC, 서버리스 및 보안 자동화 클라우드 운영 포트폴리오입니다.">
-  <title>Yujin | Cloud Operations Portfolio</title>
+  <meta name="description" content="Linux와 클라우드 환경을 직접 구성하고 모니터링·로그 분석·장애 대응 역량을 쌓아 온 최유진의 웹 이력서입니다.">
+  <title>Yujin | Infrastructure Operations Resume</title>
   <style>
 :root {
   --bg: #ffffff;
@@ -59,8 +59,11 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: .03em;
   text-transform: none;
 }
+.eyebrow { font-size: 14px; }
 .section-heading { max-width: 760px; margin-bottom: 32px; }
 .section-heading h2, .project-group-heading h2 { margin: 0; font-size: clamp(1.75rem, 3.5vw, 2.4rem); line-height: 1.35; letter-spacing: -.03em; }
+#profile-title { font-size: clamp(30.5px, calc(3.5vw + 2.5px), 40.9px); line-height: 1.5; }
+#skills-title { font-size: clamp(30.5px, calc(3.5vw + 1.5px), 39.9px); }
 .section-heading > p:last-child { margin: 12px 0 0; color: var(--muted); }
 
 .hero { padding: 90px 0 76px; border-bottom: 1px solid var(--line); }
@@ -139,7 +142,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .contact-box { display: flex; align-items: end; justify-content: space-between; gap: 40px; padding: 0; }
-.contact-box h2 { max-width: 760px; margin: 0; font-size: clamp(1.6rem,3vw,2.25rem); line-height: 1.4; }
+.contact-box h2 { max-width: 760px; margin: 0; font-size: clamp(28.6px, calc(3vw + 3px), 39px); line-height: 1.5; }
 .contact-box p:last-child { margin: 10px 0 0; color: var(--muted); }
 .contact-links { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-top: 18px; }
 .contact-links a { color: var(--blue); font-size: .92rem; font-weight: 600; }
@@ -243,7 +246,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 @media (max-width: 700px) {
-  .container { width: min(calc(100% - 28px), var(--container)); }
+  .container { width: min(calc(100% - 32px), var(--container)); }
   .section { padding: 56px 0; }
   .header-inner { min-height: 58px; }
   .logo-text { display: none; }
@@ -286,10 +289,10 @@ a { color: inherit; text-decoration: none; }
     <section class="hero section">
       <div class="container hero-grid">
         <div class="hero-copy">
-          <p class="eyebrow">Cloud Operations</p>
-          <h1>최유진<br>Cloud Operations</h1>
+          <p class="eyebrow">Infrastructure Operations</p>
+          <h1>최유진<br>Infrastructure Operations</h1>
           <p class="hero-description">
-            AWS/Linux 기반 클라우드 운영 직무를 준비하고 있습니다. 모니터링, 로그 추적, 장애 대응, IaC와 보안 자동화 실습을 정리했습니다.
+            Linux와 클라우드 환경을 구성하고, 모니터링·로그 분석·장애 대응을 실습하고 있습니다.
           </p>
           <div class="hero-actions">
             <a class="button primary" href="projects.html">프로젝트 보기</a>
@@ -303,7 +306,7 @@ a { color: inherit; text-decoration: none; }
           <dl class="profile-list">
             <div>
               <dt>Target Role</dt>
-              <dd>시스템·서버 관제, 클라우드 운영, 인프라 운영, 장애 대응</dd>
+              <dd>인프라 운영 · 클라우드 운영 · 시스템·서버 관제 · 장애 1차 대응</dd>
             </div>
             <div>
               <dt>Operations Focus</dt>
@@ -322,7 +325,7 @@ a { color: inherit; text-decoration: none; }
       <div class="container">
         <div class="section-heading">
           <p class="eyebrow">About Yujin</p>
-          <h2 id="profile-title">운영 환경을 직접 구성하고, 장애를 추적하며 성장하고 있습니다.</h2>
+          <h2 id="profile-title">운영 환경을 직접 구성하고, 장애를 추적하며 인프라 운영 역량을 쌓고 있습니다.</h2>
         </div>
 
         <div class="intro-card">
@@ -455,66 +458,52 @@ a { color: inherit; text-decoration: none; }
         <div class="section-heading">
           <p class="eyebrow">Technology</p>
           <h2 id="skills-title">기술 스택</h2>
-          <p>교육, 팀 프로젝트와 AWS/Linux 운영 실습에서 활용한 기술을 분야별로 정리했습니다.</p>
+          <p>교육, 팀 프로젝트와 인프라 운영 실습에서 활용한 기술을 분야별로 정리했습니다.</p>
         </div>
 
         <div class="skill-grid">
           <article class="skill-card">
-            <h3>Cloud &amp; Network</h3>
+            <h3>Cloud / Infrastructure</h3>
             <div class="skill-tags">
-              <span>AWS EC2</span><span>VPC</span><span>IAM</span><span>ALB</span><span>Target Group</span>
-              <span>Auto Scaling</span><span>Launch Template</span><span>NAT Gateway</span><span>Bastion Host</span>
-              <span>S3</span><span>RDS</span><span>Route 53</span><span>CloudFront</span><span>EKS</span>
+              <span>AWS</span><span>NAVER Cloud Platform</span><span>EC2</span><span>Lambda</span><span>Terraform</span>
             </div>
           </article>
 
           <article class="skill-card">
-            <h3>Serverless &amp; Security</h3>
+            <h3>Container / Deployment</h3>
             <div class="skill-tags">
-              <span>API Gateway</span><span>Lambda</span><span>DynamoDB</span><span>SQS</span>
-              <span>CloudWatch Logs</span><span>CloudWatch Alarm</span><span>SNS</span><span>CloudTrail</span>
-              <span>EventBridge</span><span>AWS Config</span><span>Security Group</span>
+              <span>Docker / Compose</span><span>Kubernetes / EKS</span><span>ECS Fargate</span><span>ECR</span>
+              <span>GitHub Actions (OIDC)</span><span>Argo CD</span>
             </div>
           </article>
 
           <article class="skill-card">
-            <h3>OS &amp; Automation</h3>
+            <h3>Monitoring / Logging</h3>
             <div class="skill-tags">
-              <span>Linux</span><span>Amazon Linux 2023</span><span>Nginx</span><span>Shell Script</span>
-              <span>Ansible</span><span>Terraform</span>
+              <span>CloudWatch</span><span>Prometheus</span><span>Grafana</span><span>AlertManager</span>
+              <span>ELK</span><span>OpenSearch</span>
             </div>
           </article>
 
           <article class="skill-card">
-            <h3>Container &amp; Orchestration</h3>
+            <h3>Application / Automation</h3>
             <div class="skill-tags">
-              <span>Docker</span><span>Docker Compose</span><span>Kubernetes</span><span>HPA</span>
-              <span>Helm</span><span>Argo CD</span>
+              <span>Python</span><span>FastAPI</span><span>Spring Boot</span><span>Shell Script</span><span>Ansible</span>
             </div>
           </article>
 
           <article class="skill-card">
-            <h3>Monitoring &amp; Logging</h3>
+            <h3>Test / Failure Validation</h3>
             <div class="skill-tags">
-              <span>Prometheus</span><span>Grafana</span><span>AlertManager</span><span>Slack Alert</span>
-              <span>Logback</span><span>MDC</span><span>Logstash</span><span>Elasticsearch</span>
-              <span>Kibana</span><span>OpenSearch</span>
+              <span>Locust</span><span>Chaos Mesh</span>
             </div>
           </article>
 
           <article class="skill-card">
-            <h3>CI/CD &amp; Development</h3>
+            <h3>OS / Network / Database</h3>
             <div class="skill-tags">
-              <span>GitHub Actions</span><span>OIDC</span><span>Java 17</span><span>Spring Boot</span>
-              <span>Python 3.12</span><span>JavaScript</span><span>HTML</span><span>CSS</span><span>Redis</span>
-            </div>
-          </article>
-
-          <article class="skill-card">
-            <h3>Test &amp; Collaboration Tools</h3>
-            <div class="skill-tags">
-              <span>Locust</span><span>Chaos Mesh</span><span>Postman</span><span>Git</span><span>GitHub</span>
-              <span>Notion</span><span>Slack</span>
+              <span>Linux</span><span>Nginx</span><span>VPC</span><span>ALB</span>
+              <span>RDS (MySQL/PostgreSQL)</span><span>Redis</span>
             </div>
           </article>
         </div>
@@ -525,7 +514,7 @@ a { color: inherit; text-decoration: none; }
       <div class="container contact-box">
         <div>
           <p class="eyebrow">Contact</p>
-          <h2 id="contact-title">운영 과정을 기록하고 개선하는 주니어 클라우드 엔지니어를 준비하고 있습니다.</h2>
+          <h2 id="contact-title">운영 과정을 기록하고 개선하며, 주니어 인프라 운영 엔지니어로 성장해 나가고 있습니다.</h2>
           <p>프로젝트 상세 내용은 Projects 페이지에서 확인할 수 있습니다.</p>
           <div class="contact-links">
             <a href="mailto:chdbwls2023@gmail.com">chdbwls2023@gmail.com</a>
@@ -539,7 +528,7 @@ a { color: inherit; text-decoration: none; }
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>© 2026 Yujin. Cloud Operations Portfolio.</p>
+      <p>© 2026 Yujin. Infrastructure Operations Resume.</p>
       <a href="#main-content">맨 위로 ↑</a>
     </div>
   </footer>
