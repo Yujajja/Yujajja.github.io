@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Linux와 클라우드 환경을 직접 구성하고 모니터링·로그 분석·장애 대응 역량을 쌓아 온 최유진의 웹 이력서입니다.">
-  <title>Yujin | Infrastructure Operations Resume</title>
+  <meta name="description" content="Linux와 클라우드 환경을 직접 구성하고 모니터링·로그 분석·장애 대응 역량을 쌓아 온 최유진의 웹 포트폴리오입니다.">
+  <title>Yujin | Infrastructure Operations Portfolio</title>
   <style>
 :root {
   --bg: #ffffff;
@@ -249,7 +249,7 @@ a { color: inherit; text-decoration: none; }
   .container { width: min(calc(100% - 32px), var(--container)); }
   .section { padding: 56px 0; }
   .header-inner { min-height: 58px; }
-  .logo-text { display: none; }
+  .logo-text { display: inline; }
   .main-nav { gap: 16px; font-size: .84rem; }
   .main-nav a { padding: 18px 0 15px; }
   .hero, .page-hero, .projects-hero, .detail-hero { padding: 64px 0 50px; }
@@ -275,7 +275,6 @@ a { color: inherit; text-decoration: none; }
   <header class="site-header">
     <div class="container header-inner">
       <a class="logo" href="index.html" aria-label="Yujin 홈으로 이동">
-        <span class="logo-mark">YJ</span>
         <span class="logo-text">Yujin Portfolio</span>
       </a>
       <nav class="main-nav" aria-label="주요 메뉴">
@@ -292,11 +291,10 @@ a { color: inherit; text-decoration: none; }
           <p class="eyebrow">Infrastructure Operations</p>
           <h1>최유진<br>Infrastructure Operations</h1>
           <p class="hero-description">
-            Linux와 클라우드 환경을 구성하고, 모니터링·로그 분석·장애 대응을 실습하고 있습니다.
+            Linux·클라우드 환경을 구성하고, 지표와 로그로 문제를 추적하는 인프라 운영 역량을 쌓았습니다.
           </p>
           <div class="hero-actions">
             <a class="button primary" href="projects.html">프로젝트 보기</a>
-            <a class="button secondary" href="https://github.com/Yujajja" target="_blank" rel="noopener noreferrer">GitHub 프로필</a>
           </div>
         </div>
 
@@ -306,7 +304,7 @@ a { color: inherit; text-decoration: none; }
           <dl class="profile-list">
             <div>
               <dt>Target Role</dt>
-              <dd>인프라 운영 · 클라우드 운영 · 시스템·서버 관제 · 장애 1차 대응</dd>
+              <dd>인프라 운영 · 시스템/서버 운영 · 클라우드 운영 · 장애 대응</dd>
             </div>
             <div>
               <dt>Operations Focus</dt>
@@ -330,13 +328,12 @@ a { color: inherit; text-decoration: none; }
 
         <div class="intro-card">
           <p>
-            클라우드 인프라를 직접 구성하고, 서비스가 실행되는 것만 확인하는 데서 끝내지 않습니다.
-            로그와 지표를 통해 상태를 확인하고 장애를 재현한 뒤, 감지·확인·복구 과정을 정리합니다.
+            클라우드 인프라를 직접 구성하고, 로그와 지표로 상태를 확인하며 장애를 재현·분석하는 실습을 이어왔습니다.
           </p>
           <p>
-            팀 프로젝트에서는 Prometheus와 Grafana 기반 모니터링, AlertManager 알림,
-            Locust와 Chaos Mesh를 활용한 부하·장애 검증을 담당했습니다. 이후 개인 실습을 통해
-            EC2 운영, ELK 로그 추적, Terraform, 서버리스 CI/CD, 보안 자동 조치까지 운영 범위를 확장했습니다.
+            팀 프로젝트에서는 Prometheus·Grafana 기반 모니터링과 AlertManager 알림, Locust·Chaos Mesh를 활용한
+            부하·장애 검증을 담당했고, 이후 EC2 운영, ELK 로그 추적, Terraform, 서버리스 CI/CD,
+            보안 자동 조치까지 경험 범위를 넓혔습니다.
           </p>
         </div>
 
@@ -465,7 +462,28 @@ a { color: inherit; text-decoration: none; }
           <article class="skill-card">
             <h3>Cloud / Infrastructure</h3>
             <div class="skill-tags">
-              <span>AWS</span><span>NAVER Cloud Platform</span><span>EC2</span><span>Lambda</span><span>Terraform</span>
+              <span>AWS</span><span>NAVER Cloud Platform</span><span>EC2</span><span>Lambda</span>
+            </div>
+          </article>
+
+          <article class="skill-card">
+            <h3>IaC / Automation</h3>
+            <div class="skill-tags">
+              <span>Terraform</span><span>Ansible</span><span>Shell Script</span>
+            </div>
+          </article>
+
+          <article class="skill-card">
+            <h3>Monitoring</h3>
+            <div class="skill-tags">
+              <span>CloudWatch</span><span>Prometheus</span><span>Grafana</span><span>AlertManager</span>
+            </div>
+          </article>
+
+          <article class="skill-card">
+            <h3>Logging</h3>
+            <div class="skill-tags">
+              <span>ELK</span><span>OpenSearch</span><span>CloudWatch Logs</span><span>Cloud Log Analytics</span>
             </div>
           </article>
 
@@ -473,37 +491,15 @@ a { color: inherit; text-decoration: none; }
             <h3>Container / Deployment</h3>
             <div class="skill-tags">
               <span>Docker / Compose</span><span>Kubernetes / EKS</span><span>ECS Fargate</span><span>ECR</span>
-              <span>GitHub Actions (OIDC)</span><span>Argo CD</span>
+              <span>GitHub Actions</span><span>Argo CD</span>
             </div>
           </article>
 
           <article class="skill-card">
-            <h3>Monitoring / Logging</h3>
-            <div class="skill-tags">
-              <span>CloudWatch</span><span>Prometheus</span><span>Grafana</span><span>AlertManager</span>
-              <span>ELK</span><span>OpenSearch</span>
-            </div>
-          </article>
-
-          <article class="skill-card">
-            <h3>Application / Automation</h3>
-            <div class="skill-tags">
-              <span>Python</span><span>FastAPI</span><span>Spring Boot</span><span>Shell Script</span><span>Ansible</span>
-            </div>
-          </article>
-
-          <article class="skill-card">
-            <h3>Test / Failure Validation</h3>
-            <div class="skill-tags">
-              <span>Locust</span><span>Chaos Mesh</span>
-            </div>
-          </article>
-
-          <article class="skill-card">
-            <h3>OS / Network / Database</h3>
+            <h3>OS / Network / Database / Validation</h3>
             <div class="skill-tags">
               <span>Linux</span><span>Nginx</span><span>VPC</span><span>ALB</span>
-              <span>RDS (MySQL/PostgreSQL)</span><span>Redis</span>
+              <span>RDS (MySQL/PostgreSQL)</span><span>Redis</span><span>Locust</span><span>Chaos Mesh</span>
             </div>
           </article>
         </div>
@@ -528,7 +524,7 @@ a { color: inherit; text-decoration: none; }
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>© 2026 Yujin. Infrastructure Operations Resume.</p>
+      <p>© 2026 Yujin. Infrastructure Operations Portfolio.</p>
       <a href="#main-content">맨 위로 ↑</a>
     </div>
   </footer>
